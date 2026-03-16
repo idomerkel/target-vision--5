@@ -14,99 +14,134 @@
         body { 
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background-color: #000000; color: white; margin: 0; padding: 6px; box-sizing: border-box;
-            display: flex; flex-direction: column; gap: 6px; height: 100vh; width: 100vw;
-            overflow: hidden; touch-action: none;
+            display: flex; flex-direction: column; gap: 6px; 
+            /* FIX: Use 100dvh for mobile address bar and 100% for precise padding rendering */
+            height: 100dvh; width: 100%;
+            overflow: hidden; touch-action: none; overscroll-behavior: none;
         }
         
         /* APP CARDS */
         .app-card {
-            background: #121212; border-radius: 10px; border: 1px solid #2a2a2a;
+            background: #121212;
+            border-radius: 10px; border: 1px solid #2a2a2a;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); overflow: hidden; position: relative;
         }
 
         /* --- TOP HEADER (GYRO + TOGGLES) --- */
         .header-row {
-            display: flex; flex-direction: row; height: 10vh; gap: 6px; flex-shrink: 0; width: 100%;
+            display: flex;
+            flex-direction: row; height: 10vh; gap: 6px; flex-shrink: 0; width: 100%;
         }
         .menu-btn, .fs-btn {
-            background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 10px;
+            background: #1a1a1a;
+            border: 1px solid #333; color: white; border-radius: 10px;
             width: 10vh; height: 10vh; display: flex; justify-content: center; align-items: center;
-            font-size: 20px; cursor: pointer; flex-shrink: 0; transition: background 0.2s;
+            font-size: 20px;
+            cursor: pointer; flex-shrink: 0; transition: background 0.2s;
         }
         .menu-btn:active, .fs-btn:active { background: #333; }
         .gyro-container {
-            flex: 1; height: 100%; position: relative;
+            flex: 1;
+            height: 100%; position: relative;
         }
         .panel-label { 
-            position: absolute; top: 4px; left: 6px; font-size: 9px; font-weight: bold; color: #aaa;
-            z-index: 20; background: rgba(0,0,0,0.7); padding: 2px 6px; border-radius: 4px; pointer-events: none;
+            position: absolute;
+            top: 4px; left: 6px; font-size: 9px; font-weight: bold; color: #aaa;
+            z-index: 20; background: rgba(0,0,0,0.7); padding: 2px 6px; border-radius: 4px;
+            pointer-events: none;
         }
 
         /* --- MAIN QUAD GRID --- */
         .quad-grid {
-            flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+            flex: 1;
+            display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
             gap: 6px; min-height: 0;
         }
         .quad-cell {
-            position: relative; width: 100%; height: 100%; min-height: 0; min-width: 0;
+            position: relative;
+            width: 100%; height: 100%; min-height: 0; min-width: 0;
             display: flex; flex-direction: column;
         }
 
         /* Quadrant 1: Video */
-        video, canvas.overlay { position: absolute; width: 100%; height: 100%; top: 0; left: 0; object-fit: fill; }
+        video, canvas.overlay { position: absolute;
+            width: 100%; height: 100%; top: 0; left: 0; object-fit: fill;
+        }
         canvas.overlay { pointer-events: none; z-index: 10; }
 
         /* Quadrant 3: Results */
-        .results-wrapper { display: flex; flex-direction: column; height: 100%; padding: 6px; box-sizing: border-box;}
-        .split-view { display: flex; gap: 6px; flex: 1; min-height: 0; overflow: hidden; margin-top: 2px; }
-        .feed-col { display: flex; flex-direction: column; overflow-y: auto; flex: 1; padding-right: 2px; height: 100%; }
+        .results-wrapper { display: flex;
+            flex-direction: column; height: 100%; padding: 6px; box-sizing: border-box;}
+        .split-view { display: flex;
+            gap: 6px; flex: 1; min-height: 0; overflow: hidden; margin-top: 2px;
+        }
+        .feed-col { display: flex; flex-direction: column; overflow-y: auto; flex: 1; padding-right: 2px;
+            height: 100%; }
         .feed-col::-webkit-scrollbar { width: 3px; }
         .feed-col::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
-        .feed-col h3 { font-size: 9px; color: #888; margin: 0 0 4px 0; border-bottom: 1px solid #333; padding-bottom: 2px; text-align: center; position: sticky; top: 0; background: #121212; z-index: 5;}
+        .feed-col h3 { font-size: 9px; color: #888; margin: 0 0 4px 0;
+            border-bottom: 1px solid #333; padding-bottom: 2px; text-align: center; position: sticky; top: 0; background: #121212;
+            z-index: 5;}
         
-        .card { background: #1a1a1a; border-radius: 6px; padding: 6px; border-left: 3px solid #444; margin-bottom: 6px; display: none; flex-shrink: 0;}
+        .card { background: #1a1a1a;
+            border-radius: 6px; padding: 6px; border-left: 3px solid #444; margin-bottom: 6px; display: none;
+            flex-shrink: 0;}
         .result-card.visible { display: block; animation: fadeIn 0.2s ease; }
         .card h4 { margin: 0 0 4px 0; font-size: 9px; }
         
         /* Clickable Mistake Row */
-        .mistake { display: flex; justify-content: space-between; border-bottom: 1px solid #2a2a2a; padding: 4px 2px; font-size: 8px; align-items: center;}
+        .mistake { display: flex;
+            justify-content: space-between; border-bottom: 1px solid #2a2a2a; padding: 4px 2px; font-size: 8px;
+            align-items: center;}
         .mistake:last-child { border-bottom: none; }
         .clickable-mistake { cursor: pointer; transition: background 0.2s; border-radius: 4px;}
         .clickable-mistake:hover { background: #2a2a2a; }
         .tag { font-size: 7px; font-weight: bold; border-radius: 3px; padding: 2px 4px; display: inline-block;}
 
         /* Quadrant 4: Wheel & Slider Container */
-        .controls-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; position: relative;}
-        .playback-controls { width: 100%; height: 100%; display: none; flex-direction: row; align-items: center; justify-content: center; gap: 20px;}
+        .controls-wrapper { display: flex;
+            flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%;
+            position: relative;}
+        .playback-controls { width: 100%; height: 100%; display: none; flex-direction: row;
+            align-items: center; justify-content: center; gap: 20px;}
         
         /* Overlay Size Slider */
-        .slider-container { display: flex; flex-direction: column; align-items: center; height: 75%; }
-        .slider-label { font-size: 8px; color: #888; font-weight: bold; text-transform: uppercase; margin-bottom: 5px;}
+        .slider-container { display: flex;
+            flex-direction: column; align-items: center; height: 75%; }
+        .slider-label { font-size: 8px; color: #888;
+            font-weight: bold; text-transform: uppercase; margin-bottom: 5px;}
         input[type=range][orient=vertical] {
             writing-mode: bt-lr; /* IE */
             -webkit-appearance: slider-vertical; /* WebKit */
-            width: 12px; height: 100%; background: #222; border-radius: 6px; outline: none; border: 1px solid #444;
+            width: 12px; height: 100%; background: #222;
+            border-radius: 6px; outline: none; border: 1px solid #444;
         }
         input[type=range][orient=vertical]::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 22px; height: 22px; background: #00aaff; border-radius: 50%; cursor: pointer; box-shadow: 0 0 5px rgba(0,0,0,0.8);
+            -webkit-appearance: none;
+            width: 22px; height: 22px; background: #00aaff; border-radius: 50%; cursor: pointer; box-shadow: 0 0 5px rgba(0,0,0,0.8);
         }
 
         /* Dynamic Wheel Sizing */
         .wheel-container { 
-            width: min(70%, 25vh); aspect-ratio: 1; border-radius: 50%; 
+            width: min(70%, 25vh);
+            aspect-ratio: 1; border-radius: 50%; 
             background: conic-gradient(from 0deg, #161616, #333, #161616);
             position: relative; cursor: grab; border: 3px solid #444;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6); touch-action: none; display: flex; justify-content: center; align-items: center;
         }
-        .wheel-spinner { width: 100%; height: 100%; position: absolute; border-radius: 50%; pointer-events: none; background: repeating-conic-gradient(from 0deg, transparent 0deg 10deg, rgba(255,255,255,0.03) 10deg 20deg); }
-        .wheel-indicator { position: absolute; top: 0; left: 50%; width: 4px; height: 12px; background: #00aaff; transform: translateX(-50%); border-radius: 2px; }
+        .wheel-spinner { width: 100%; height: 100%; position: absolute; border-radius: 50%; pointer-events: none;
+            background: repeating-conic-gradient(from 0deg, transparent 0deg 10deg, rgba(255,255,255,0.03) 10deg 20deg); }
+        .wheel-indicator { position: absolute;
+            top: 0; left: 50%; width: 4px; height: 12px; background: #00aaff; transform: translateX(-50%); border-radius: 2px; }
         .wheel-center-btn { 
-            position: absolute; width: 35%; height: 35%; border-radius: 50%; 
+            position: absolute;
+            width: 35%; height: 35%; border-radius: 50%; 
             background: #007bff; border: 2px solid #0056b3; color: white; 
-            font-size: 14px; font-weight: bold; cursor: pointer; z-index: 10; 
-            display: flex; justify-content: center; align-items: center; 
+            font-size: 14px; font-weight: bold; cursor: pointer;
+            z-index: 10; display: flex; justify-content: center; align-items: center; 
         }
-        .playback-info { position: absolute; bottom: 5px; right: 10px; font-family: monospace; font-size: 12px; font-weight: bold; color: #00aaff; background: rgba(0, 170, 255, 0.1); padding: 3px 6px; border-radius: 6px;}
+        .playback-info { position: absolute;
+            bottom: 5px; right: 10px; font-family: monospace; font-size: 12px; font-weight: bold; color: #00aaff; background: rgba(0, 170, 255, 0.1); padding: 3px 6px; border-radius: 6px;}
 
         /* --- COLLAPSIBLE SIDEBAR --- */
         .sidebar-overlay {
@@ -137,7 +172,7 @@
         /* MODALS (Profile & Mistake Detail) */
         .modal {
             display: none; position: fixed; z-index: 1000; left: 0; top: 0;
-            width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85);
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.85);
             justify-content: center; align-items: center;
         }
         .modal-content {
@@ -301,7 +336,6 @@
     function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
     function saveProfile() { closeProfileModal(); }
 
-    // --- NEW: Mistake Modal Logic ---
     function openMistakeModal(name, score) {
         let mistake = mistakeDB.find(m => m.name === name);
         if (!mistake) return;
@@ -328,15 +362,16 @@
     let cropSize = 0, targetRadius = 0, persistentShots = [], candidates = [], blacklist = [];
     let targetCenter = { x: 0, y: 0 }; 
     let overallScore = 100;
-    let lastComputedH = null; // NEW: Stores matrix for the size slider
+    let lastComputedH = null;
 
-    const PROXIMITY = 15.0, REQ_FRAMES = 4; 
+    const PROXIMITY = 15.0, REQ_FRAMES = 4;
+    
+    // FIX: Relaxed thresholds so holding a phone doesn't instantly zero out the score
     const GYRO_SHOT_THRESHOLD = 80;
     const ACCEL_SHOT_THRESHOLD = 15;  
-    const GYRO_MOVE_THRESH = 10.0;    
-    const ACCEL_MOVE_THRESH = 1.5;
+    const GYRO_MOVE_THRESH = 20.0;    // Originally 10.0
+    const ACCEL_MOVE_THRESH = 3.5;    // Originally 1.5
 
-    // --- EXPANDED MISTAKE DATABASE (Descriptions & YouTube URLs added) ---
     const mistakeDB = [
         { name: "Jerking the trigger", tele: ["Down", "Pitch", "Left"], vis: ["Low", "Left"],
           desc: "Rapidly slapping or yanking the trigger instead of applying a smooth, continuous rearward press. This physically pulls the muzzle down and to the side right as the shot breaks.",
@@ -390,6 +425,12 @@
         if (gyro.parentElement) {
             gyro.width = gyro.parentElement.clientWidth;
             gyro.height = gyro.parentElement.clientHeight;
+            
+            // FIX: Redraw the graph automatically if the window resizes so it doesn't stay blank
+            if (sensorLog && sensorLog.length > 0) {
+                drawRecordedGraph();
+                applyPlaybackProgress(false); 
+            }
         }
     }
 
@@ -402,7 +443,7 @@
 
     function trigger3DAnimation() {
         if(viewer) {
-            viewer.currentTime = 0; 
+            viewer.currentTime = 0;
             setTimeout(() => { viewer.play(); }, 10);
         }
     }
@@ -426,20 +467,20 @@
             window.addEventListener('deviceorientation', (e) => {
                 currentTilt.pitch = e.beta || 0; currentTilt.roll = e.gamma || 0; currentTilt.yaw = e.alpha || 0;
             });
-            window.addEventListener('devicemotion', handleMotion); 
+            window.addEventListener('devicemotion', handleMotion);
         });
     }
 
     function handleMotion(event) {
         let ax = event.accelerationIncludingGravity?.x || 0; let ay = event.accelerationIncludingGravity?.y || 0; let az = event.accelerationIncludingGravity?.z || 0;
         let gx = event.rotationRate?.alpha || 0; let gy = event.rotationRate?.beta || 0; let gz = event.rotationRate?.gamma || 0;
-
         if (viewer && !isAnalyzing) { viewer.orientation = `${currentTilt.pitch}deg ${currentTilt.yaw}deg ${currentTilt.roll}deg`; }
 
         if (isRecording && (Math.abs(gx) > GYRO_SHOT_THRESHOLD || Math.abs(gy) > GYRO_SHOT_THRESHOLD)) {
             let now = performance.now();
             if (viewer && (!viewer.lastSpike || now - viewer.lastSpike > 500)) {
-                viewer.lastSpike = now; trigger3DAnimation();
+                viewer.lastSpike = now;
+                trigger3DAnimation();
             }
         }
 
@@ -453,8 +494,10 @@
     function toggleRecording() {
         let btn = document.getElementById('btnRecord');
         if (!isRecording) {
-            recordedChunks = []; sensorLog = []; persistentShots = []; telemetrySpikes = []; overallScore = 100; lastComputedH = null;
-            document.getElementById('shotList').innerHTML = ""; document.getElementById('kinematicList').innerHTML = ""; document.getElementById('deductionList').innerHTML = "";
+            recordedChunks = []; sensorLog = [];
+            persistentShots = []; telemetrySpikes = []; overallScore = 100; lastComputedH = null;
+            document.getElementById('shotList').innerHTML = ""; document.getElementById('kinematicList').innerHTML = "";
+            document.getElementById('deductionList').innerHTML = "";
             document.getElementById('sessionScoreText').innerText = "100";
             document.getElementById('overlayCanvas').getContext('2d').clearRect(0,0,640,480);
             
@@ -473,7 +516,8 @@
             btn.innerText = "Stop Record"; btn.classList.add("recording");
             toggleSidebar(); 
         } else {
-            isRecording = false; mediaRecorder.stop();
+            isRecording = false;
+            mediaRecorder.stop();
             btn.style.display = 'none'; 
         }
     }
@@ -486,7 +530,7 @@
         processEntireSensorLog();
         
         let videoElement = document.getElementById('webcam');
-        videoElement.srcObject = null; 
+        videoElement.srcObject = null;
         videoElement.src = URL.createObjectURL(new Blob(recordedChunks, { type: mediaRecorder.mimeType }));
         
         videoElement.onplay = () => { isAnalyzing = true; trackingLoopPlayback(); };
@@ -509,13 +553,17 @@
     }
 
     function grab() {
-        let cvs = document.getElementById('calcCanvas'); let video = document.getElementById('webcam');
+        let cvs = document.getElementById('calcCanvas');
+        let video = document.getElementById('webcam');
         cvs.getContext('2d').drawImage(video, 0,0, 640, 480); return cv.imread(cvs);
     }
 
     function setBaseline() {
-        if(!orb) { orb = new cv.ORB(1500); matcher = new cv.BFMatcher(cv.NORM_HAMMING, true); refKP = new cv.KeyPointVector(); refDesc = new cv.Mat(); }
-        let frame = grab(); let gray = new cv.Mat(), thresh = new cv.Mat();
+        if(!orb) { orb = new cv.ORB(1500);
+            matcher = new cv.BFMatcher(cv.NORM_HAMMING, true); refKP = new cv.KeyPointVector(); refDesc = new cv.Mat();
+        }
+        let frame = grab();
+        let gray = new cv.Mat(), thresh = new cv.Mat();
         cv.cvtColor(frame, gray, cv.COLOR_RGBA2GRAY); cv.adaptiveThreshold(gray, thresh, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY_INV, 15, 5);
         let contours = new cv.MatVector(), hierarchy = new cv.Mat(); cv.findContours(thresh, contours, hierarchy, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
         let best = null, maxA = 0;
@@ -525,22 +573,21 @@
         }
         if(!best) { alert("Center target better!"); frame.delete(); gray.delete(); thresh.delete(); return; }
 
-        targetRadius = Math.round(best.radius); cropSize = targetRadius * 2 + 60;
+        targetRadius = Math.round(best.radius);
+        cropSize = targetRadius * 2 + 60;
         let rx = Math.max(0, best.center.x - cropSize/2), ry = Math.max(0, best.center.y - cropSize/2);
         targetCenter = { x: best.center.x - rx, y: best.center.y - ry };
-        
         let roi = frame.roi(new cv.Rect(rx, ry, Math.min(frame.cols-rx, cropSize), Math.min(frame.rows-ry, cropSize)));
         if(refGray) refGray.delete();
         refGray = new cv.Mat(); cv.cvtColor(roi, refGray, cv.COLOR_RGBA2GRAY);
-        
         let mask = cv.Mat.zeros(roi.rows, roi.cols, cv.CV_8UC1);
         cv.circle(mask, new cv.Point(targetCenter.x, targetCenter.y), targetRadius - 10, new cv.Scalar(255), -1);
         orb.detectAndCompute(refGray, mask, refKP, refDesc);
-        
         document.getElementById('btnRecord').disabled = false; document.getElementById('btnBase').style.display = 'none';
         
         let stat = document.getElementById('status'); stat.innerText = "Target Locked"; stat.style.color = "#ff3b30";
-        toggleSidebar(); frame.delete(); gray.delete(); thresh.delete(); contours.delete(); hierarchy.delete(); mask.delete(); roi.delete();
+        toggleSidebar(); frame.delete(); gray.delete();
+        thresh.delete(); contours.delete(); hierarchy.delete(); mask.delete(); roi.delete();
     }
 
     function drawRecordedGraph() {
@@ -550,7 +597,8 @@
         const step = canvas.width / sensorLog.length;
 
         function plotLine(key, color) {
-            ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 1.5; ctx.beginPath();
             for (let i = 0; i < sensorLog.length; i++) {
                 let y = (canvas.height / 2) - ((sensorLog[i][key] || 0) * 0.5);
                 if (i === 0) ctx.moveTo(i * step, y); else ctx.lineTo(i * step, y);
@@ -566,7 +614,8 @@
             let s = sensorLog[i];
             if (s.time_ms - lastSpikeTime > 500) {
                 if (Math.abs(s.gx) > GYRO_SHOT_THRESHOLD || Math.abs(s.gy) > GYRO_SHOT_THRESHOLD || Math.abs(s.ax) > ACCEL_SHOT_THRESHOLD) {
-                    lastSpikeTime = s.time_ms; shotCounter++;
+                    lastSpikeTime = s.time_ms;
+                    shotCounter++;
                     let preShotSlice = sensorLog.filter(data => data.time_ms >= s.time_ms - 400 && data.time_ms <= s.time_ms);
                     diagnoseKinematics(preShotSlice, shotCounter);
                 }
@@ -605,10 +654,8 @@
         
         let top3Tele = allTeleMatches.slice(0, 3);
         while(top3Tele.length < 3) top3Tele.push({name: "N/A", score: 0});
-
         let matchesHtml = top3Tele.map((m, i) => `
             <div class="mistake"><span style="color:#ddd">${i+1}. ${m.name}</span></div>`).join('');
-            
         document.getElementById('kinematicList').insertAdjacentHTML('beforeend', `
             <div class="card result-card" data-time="${eventTime}" style="border-left-color: #ff3b30;">
                 <h4 style="color: #ff3b30;">K-${shotId}</h4>
@@ -635,7 +682,8 @@
                         let matSrc = cv.matFromArray(good.length, 1, cv.CV_32FC2, srcP), matDst = cv.matFromArray(good.length, 1, cv.CV_32FC2, dstP);
                         let H = cv.findHomography(matSrc, matDst, cv.RANSAC, 5.0);
                         if(!H.empty()) {
-                            let invH = new cv.Mat(); cv.invert(H, invH, cv.DECOMP_LU);
+                            let invH = new cv.Mat();
+                            cv.invert(H, invH, cv.DECOMP_LU);
                             let warped = new cv.Mat(); cv.warpPerspective(grayLive, warped, invH, new cv.Size(refGray.cols, refGray.rows));
                             let diff = new cv.Mat(), thresh = new cv.Mat();
                             cv.absdiff(refGray, warped, diff); cv.threshold(diff, thresh, 50, 255, cv.THRESH_BINARY);
@@ -650,8 +698,9 @@
                             for(let i=0; i<contours.size(); i++) {
                                 let cnt = contours.get(i), area = cv.contourArea(cnt);
                                 if(area > 15 && area < 600) {
-                                    let M = cv.moments(cnt); let p = {x: M.m10/M.m00, y: M.m01/M.m00};
-                                    if (Math.hypot(p.x - targetCenter.x, p.y - targetCenter.y) > targetRadius - 15) continue; 
+                                    let M = cv.moments(cnt);
+                                    let p = {x: M.m10/M.m00, y: M.m01/M.m00};
+                                    if (Math.hypot(p.x - targetCenter.x, p.y - targetCenter.y) > targetRadius - 15) continue;
                                     if(blacklist.some(b => Math.hypot(b.x-p.x, b.y-p.y) < PROXIMITY)) continue;
                                     let hull = new cv.Mat(); cv.convexHull(cnt, hull);
                                     let solidity = area / (cv.contourArea(hull) || 1); hull.delete();
@@ -659,19 +708,19 @@
                                     else if(solidity < 0.65) blacklist.push(p);
                                 }
                             }
-                            processShots(currentHoles); 
-                            
-                            // Save H for the overlay size slider to use later
+                            processShots(currentHoles);
                             if (lastComputedH) lastComputedH.delete();
                             lastComputedH = H.clone();
                             drawOverlay(lastComputedH);
 
                             invH.delete(); warped.delete(); diff.delete(); thresh.delete(); liveMask.delete(); maskedThresh.delete(); contours.delete(); hier.delete(); H.delete();
                         }
-                        matSrc.delete(); matDst.delete();
+                        matSrc.delete();
+                        matDst.delete();
                     }
                 }
-            } catch(e) { console.error(e); } finally { frame.delete(); grayLive.delete(); liveKP.delete(); liveDesc.delete(); matches.delete(); }
+            } catch(e) { console.error(e);
+            } finally { frame.delete(); grayLive.delete(); liveKP.delete(); liveDesc.delete(); matches.delete(); }
         }
         if (isAnalyzing) requestAnimationFrame(trackingLoopPlayback);
     }
@@ -687,26 +736,21 @@
                     let diag = getDiag131(h.x, h.y);
                     persistentShots.push({id: Date.now(), x:h.x, y:h.y, d: diag});
                     let shotID = persistentShots.length;
-                    
                     let visHtml = diag.m.map((m, i) => `
                         <div class="mistake"><span style="color:#ddd">${i+1}. ${m.n}</span></div>`).join('');
-                    
                     document.getElementById('shotList').insertAdjacentHTML('beforeend', `
                         <div class="card result-card" data-time="${vidTimeMs}" style="border-left-color: #00aaff;">
                             <h4 style="color:#00aaff;">V-${shotID}</h4>
                             ${visHtml}
                         </div>
                     `);
-
                     let closestSpike = null, minDiff = 1000;
                     telemetrySpikes.forEach(spike => {
                         let diff = Math.abs(spike.time - vidTimeMs);
                         if (diff < minDiff) { minDiff = diff; closestSpike = spike; }
                     });
-                    
                     let tMoves = closestSpike ? closestSpike.moves : [];
                     let scoreDeduction = 0;
-
                     let scored = mistakeDB.map(m => {
                         let score = 0, matchVis = false, matchTele = false;
                         m.tele.forEach(pattern => { if (tMoves.includes(pattern)) { score += 10; matchTele = true; } });
@@ -719,15 +763,12 @@
 
                         return { name: m.name, score: score, tag: tag, tagColor: tagColor };
                     });
-                    
                     overallScore -= scoreDeduction; 
                     document.getElementById('sessionScoreText').innerText = overallScore;
                     scored.sort((a,b) => b.score - a.score);
                     
                     let top3 = scored.slice(0, 3);
                     while(top3.length < 3) top3.push({name: "N/A", score: 0, tag: "N/A", tagColor: "#555"});
-                    
-                    // NEW: Appended 'onclick' to trigger the mistake modal
                     let top3Html = top3.map((m, i) => {
                         if (m.name === "N/A") return `<div class="mistake"><span style="color:#555;">${i+1}. N/A</span></div>`;
                         return `
@@ -736,7 +777,6 @@
                             <span class="tag" style="background:${m.tagColor}; color:#000;">${m.tag}</span>
                         </div>`;
                     }).join('');
-                        
                     document.getElementById('deductionList').insertAdjacentHTML('beforeend', `
                         <div class="card result-card" data-time="${vidTimeMs}" style="border-left-color: #aa00ff;">
                             <h4 style="color:#aa00ff;">D-${shotID} (-${scoreDeduction})</h4>
@@ -762,7 +802,6 @@
         return {z:"Right", m:[{n:"Finger Tip Pressure", p:"High"},{n:"Thumb Pressure", p:"Med"},{n:"Cheek Weld", p:"Low"}]};
     }
 
-    // --- NEW: Dynamic Overlay Sizing ---
     function updateOverlayScale() {
         if (lastComputedH && !lastComputedH.isDeleted()) {
             drawOverlay(lastComputedH);
@@ -775,19 +814,17 @@
         ctx.clearRect(0,0, 640, 480);
 
         let scale = parseFloat(document.getElementById('overlaySlider').value);
-        if (scale === 0) return; // Completely hidden
+        if (scale === 0) return;
 
         persistentShots.forEach((s, idx) => {
             let p = cv.matFromArray(3, 1, cv.CV_64F, [s.x, s.y, 1.0]);
             let dP = new cv.Mat(); cv.gemm(H, p, 1, new cv.Mat(), 0, dP);
             let x = dP.data64F[0]/dP.data64F[2], y = dP.data64F[1]/dP.data64F[2];
             
-            // Scaled Graphic
             ctx.beginPath(); ctx.arc(x,y, 10 * scale, 0, 6.28); 
             ctx.fillStyle="rgba(0,255,0,0.7)"; ctx.fill();
             ctx.strokeStyle="white"; ctx.stroke();
             
-            // Scaled Text
             ctx.fillStyle="white"; 
             ctx.font= (11 * scale) + "px sans-serif"; 
             ctx.fillText("#"+(idx+1), x + (14 * scale), y + (4 * scale));
@@ -796,10 +833,8 @@
         });
     }
 
-    // --- WHEEL PLAYBACK ---
     const wheel = document.getElementById('scrubWheel'), spinner = document.getElementById('wheelSpinner'), playBtn = document.getElementById('btnPlayPause');
     let isDraggingWheel = false, lastAngle = 0, visualAngle = 0, playbackProgress = 0, isAutoPlaying = false, playInterval;
-    
     wheel.addEventListener('pointerdown', (e) => {
         if (!isAnalyzing && sensorLog.length === 0 || e.target === playBtn) return;
         isDraggingWheel = true; pausePlayback();
@@ -807,7 +842,6 @@
         let rect = wheel.getBoundingClientRect();
         lastAngle = Math.atan2(e.clientY - (rect.top + rect.height/2), e.clientX - (rect.left + rect.width/2));
     });
-    
     wheel.addEventListener('pointermove', (e) => {
         if (!isDraggingWheel) return;
         let rect = wheel.getBoundingClientRect();
@@ -815,12 +849,12 @@
         let delta = angle - lastAngle;
         if (delta > Math.PI) delta -= 2 * Math.PI; if (delta < -Math.PI) delta += 2 * Math.PI;
         lastAngle = angle;
+        
         visualAngle += delta * (180 / Math.PI);
         playbackProgress += delta / (Math.PI * 4); 
         if (playbackProgress < 0) playbackProgress = 0; if (playbackProgress > 1) playbackProgress = 1;
         applyPlaybackProgress();
     });
-    
     wheel.addEventListener('pointerup', () => isDraggingWheel = false);
     wheel.addEventListener('pointercancel', () => isDraggingWheel = false);
     
@@ -828,7 +862,8 @@
     
     function startPlayback() {
         if(sensorLog.length === 0) return;
-        isAutoPlaying = true; playBtn.innerText = "⏸";
+        isAutoPlaying = true;
+        playBtn.innerText = "⏸";
         if (playbackProgress >= 1) playbackProgress = 0; 
         let videoElement = document.getElementById('webcam');
         if (videoElement.duration) videoElement.play();
@@ -859,14 +894,16 @@
             if (Math.abs(s.gx) > GYRO_SHOT_THRESHOLD || Math.abs(s.gy) > GYRO_SHOT_THRESHOLD) {
                 let now = performance.now();
                 if (!viewer.lastSpike || now - viewer.lastSpike > 500) {
-                    viewer.lastSpike = now; trigger3DAnimation();
+                    viewer.lastSpike = now;
+                    trigger3DAnimation();
                 }
             }
         }
 
         let canvas = document.getElementById('gyroGraph'), playhead = document.getElementById('graphPlayhead');
         if (canvas && playhead) {
-            playhead.style.display = 'block'; playhead.style.left = (playbackProgress * canvas.width) + 'px';
+            playhead.style.display = 'block';
+            playhead.style.left = (playbackProgress * canvas.width) + 'px';
         }
 
         let currentMs = s.time_ms;
