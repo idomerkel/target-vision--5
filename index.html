@@ -15,144 +15,98 @@
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background-color: #000000; color: white; margin: 0; padding: 6px; box-sizing: border-box;
             display: flex; flex-direction: column; gap: 6px; 
-            /* FIX: Use 100dvh for mobile address bar and 100% for precise padding rendering */
-            height: 100dvh; width: 100%;
+            height: 100dvh; width: 100%; /* FIX: Mobile viewport and even padding */
             overflow: hidden; touch-action: none; overscroll-behavior: none;
         }
         
         /* APP CARDS */
         .app-card {
-            background: #121212;
-            border-radius: 10px; border: 1px solid #2a2a2a;
+            background: #121212; border-radius: 10px; border: 1px solid #2a2a2a;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); overflow: hidden; position: relative;
         }
 
         /* --- TOP HEADER (GYRO + TOGGLES) --- */
         .header-row {
-            display: flex;
-            flex-direction: row; height: 10vh; gap: 6px; flex-shrink: 0; width: 100%;
+            display: flex; flex-direction: row; height: 10vh; gap: 6px; flex-shrink: 0; width: 100%;
         }
         .menu-btn, .fs-btn {
-            background: #1a1a1a;
-            border: 1px solid #333; color: white; border-radius: 10px;
+            background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 10px;
             width: 10vh; height: 10vh; display: flex; justify-content: center; align-items: center;
-            font-size: 20px;
-            cursor: pointer; flex-shrink: 0; transition: background 0.2s;
+            font-size: 20px; cursor: pointer; flex-shrink: 0; transition: background 0.2s;
         }
         .menu-btn:active, .fs-btn:active { background: #333; }
-        .gyro-container {
-            flex: 1;
-            height: 100%; position: relative;
-        }
+        .gyro-container { flex: 1; height: 100%; position: relative; }
         .panel-label { 
-            position: absolute;
-            top: 4px; left: 6px; font-size: 9px; font-weight: bold; color: #aaa;
-            z-index: 20; background: rgba(0,0,0,0.7); padding: 2px 6px; border-radius: 4px;
-            pointer-events: none;
+            position: absolute; top: 4px; left: 6px; font-size: 9px; font-weight: bold; color: #aaa;
+            z-index: 20; background: rgba(0,0,0,0.7); padding: 2px 6px; border-radius: 4px; pointer-events: none;
         }
 
         /* --- MAIN QUAD GRID --- */
         .quad-grid {
-            flex: 1;
-            display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+            flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
             gap: 6px; min-height: 0;
         }
         .quad-cell {
-            position: relative;
-            width: 100%; height: 100%; min-height: 0; min-width: 0;
+            position: relative; width: 100%; height: 100%; min-height: 0; min-width: 0;
             display: flex; flex-direction: column;
         }
 
         /* Quadrant 1: Video */
-        video, canvas.overlay { position: absolute;
-            width: 100%; height: 100%; top: 0; left: 0; object-fit: fill;
-        }
+        video, canvas.overlay { position: absolute; width: 100%; height: 100%; top: 0; left: 0; object-fit: fill; }
         canvas.overlay { pointer-events: none; z-index: 10; }
 
         /* Quadrant 3: Results */
-        .results-wrapper { display: flex;
-            flex-direction: column; height: 100%; padding: 6px; box-sizing: border-box;}
-        .split-view { display: flex;
-            gap: 6px; flex: 1; min-height: 0; overflow: hidden; margin-top: 2px;
-        }
-        .feed-col { display: flex; flex-direction: column; overflow-y: auto; flex: 1; padding-right: 2px;
-            height: 100%; }
+        .results-wrapper { display: flex; flex-direction: column; height: 100%; padding: 6px; box-sizing: border-box;}
+        .split-view { display: flex; gap: 6px; flex: 1; min-height: 0; overflow: hidden; margin-top: 2px; }
+        .feed-col { display: flex; flex-direction: column; overflow-y: auto; flex: 1; padding-right: 2px; height: 100%; }
         .feed-col::-webkit-scrollbar { width: 3px; }
         .feed-col::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
-        .feed-col h3 { font-size: 9px; color: #888; margin: 0 0 4px 0;
-            border-bottom: 1px solid #333; padding-bottom: 2px; text-align: center; position: sticky; top: 0; background: #121212;
-            z-index: 5;}
+        .feed-col h3 { font-size: 9px; color: #888; margin: 0 0 4px 0; border-bottom: 1px solid #333; padding-bottom: 2px; text-align: center; position: sticky; top: 0; background: #121212; z-index: 5;}
         
-        .card { background: #1a1a1a;
-            border-radius: 6px; padding: 6px; border-left: 3px solid #444; margin-bottom: 6px; display: none;
-            flex-shrink: 0;}
+        .card { background: #1a1a1a; border-radius: 6px; padding: 6px; border-left: 3px solid #444; margin-bottom: 6px; display: none; flex-shrink: 0;}
         .result-card.visible { display: block; animation: fadeIn 0.2s ease; }
         .card h4 { margin: 0 0 4px 0; font-size: 9px; }
         
         /* Clickable Mistake Row */
-        .mistake { display: flex;
-            justify-content: space-between; border-bottom: 1px solid #2a2a2a; padding: 4px 2px; font-size: 8px;
-            align-items: center;}
+        .mistake { display: flex; justify-content: space-between; border-bottom: 1px solid #2a2a2a; padding: 4px 2px; font-size: 8px; align-items: center;}
         .mistake:last-child { border-bottom: none; }
         .clickable-mistake { cursor: pointer; transition: background 0.2s; border-radius: 4px;}
         .clickable-mistake:hover { background: #2a2a2a; }
         .tag { font-size: 7px; font-weight: bold; border-radius: 3px; padding: 2px 4px; display: inline-block;}
 
         /* Quadrant 4: Wheel & Slider Container */
-        .controls-wrapper { display: flex;
-            flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%;
-            position: relative;}
-        .playback-controls { width: 100%; height: 100%; display: none; flex-direction: row;
-            align-items: center; justify-content: center; gap: 20px;}
+        .controls-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; position: relative;}
+        .playback-controls { width: 100%; height: 100%; display: none; flex-direction: row; align-items: center; justify-content: center; gap: 20px;}
         
         /* Overlay Size Slider */
-        .slider-container { display: flex;
-            flex-direction: column; align-items: center; height: 75%; }
-        .slider-label { font-size: 8px; color: #888;
-            font-weight: bold; text-transform: uppercase; margin-bottom: 5px;}
-        input[type=range][orient=vertical] {
-            writing-mode: bt-lr; /* IE */
-            -webkit-appearance: slider-vertical; /* WebKit */
-            width: 12px; height: 100%; background: #222;
-            border-radius: 6px; outline: none; border: 1px solid #444;
-        }
-        input[type=range][orient=vertical]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 22px; height: 22px; background: #00aaff; border-radius: 50%; cursor: pointer; box-shadow: 0 0 5px rgba(0,0,0,0.8);
-        }
+        .slider-container { display: flex; flex-direction: column; align-items: center; height: 75%; }
+        .slider-label { font-size: 8px; color: #888; font-weight: bold; text-transform: uppercase; margin-bottom: 5px;}
+        input[type=range][orient=vertical] { writing-mode: bt-lr; -webkit-appearance: slider-vertical; width: 12px; height: 100%; background: #222; border-radius: 6px; outline: none; border: 1px solid #444; }
+        input[type=range][orient=vertical]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; background: #00aaff; border-radius: 50%; cursor: pointer; box-shadow: 0 0 5px rgba(0,0,0,0.8); }
 
         /* Dynamic Wheel Sizing */
         .wheel-container { 
-            width: min(70%, 25vh);
-            aspect-ratio: 1; border-radius: 50%; 
+            width: min(70%, 25vh); aspect-ratio: 1; border-radius: 50%; 
             background: conic-gradient(from 0deg, #161616, #333, #161616);
-            position: relative; cursor: grab; border: 3px solid #444;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6); touch-action: none; display: flex; justify-content: center; align-items: center;
+            position: relative; cursor: grab; border: 3px solid #444; box-shadow: 0 4px 15px rgba(0,0,0,0.6); touch-action: none; display: flex; justify-content: center; align-items: center;
         }
-        .wheel-spinner { width: 100%; height: 100%; position: absolute; border-radius: 50%; pointer-events: none;
-            background: repeating-conic-gradient(from 0deg, transparent 0deg 10deg, rgba(255,255,255,0.03) 10deg 20deg); }
-        .wheel-indicator { position: absolute;
-            top: 0; left: 50%; width: 4px; height: 12px; background: #00aaff; transform: translateX(-50%); border-radius: 2px; }
+        .wheel-spinner { width: 100%; height: 100%; position: absolute; border-radius: 50%; pointer-events: none; background: repeating-conic-gradient(from 0deg, transparent 0deg 10deg, rgba(255,255,255,0.03) 10deg 20deg); }
+        .wheel-indicator { position: absolute; top: 0; left: 50%; width: 4px; height: 12px; background: #00aaff; transform: translateX(-50%); border-radius: 2px; }
         .wheel-center-btn { 
-            position: absolute;
-            width: 35%; height: 35%; border-radius: 50%; 
-            background: #007bff; border: 2px solid #0056b3; color: white; 
-            font-size: 14px; font-weight: bold; cursor: pointer;
+            position: absolute; width: 35%; height: 35%; border-radius: 50%; background: #007bff; border: 2px solid #0056b3; color: white; font-size: 14px; font-weight: bold; cursor: pointer;
             z-index: 10; display: flex; justify-content: center; align-items: center; 
         }
-        .playback-info { position: absolute;
-            bottom: 5px; right: 10px; font-family: monospace; font-size: 12px; font-weight: bold; color: #00aaff; background: rgba(0, 170, 255, 0.1); padding: 3px 6px; border-radius: 6px;}
+        .playback-info { position: absolute; bottom: 5px; right: 10px; font-family: monospace; font-size: 12px; font-weight: bold; color: #00aaff; background: rgba(0, 170, 255, 0.1); padding: 3px 6px; border-radius: 6px;}
 
         /* --- COLLAPSIBLE SIDEBAR --- */
-        .sidebar-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.6); z-index: 99; display: none;
-        }
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 99; display: none; }
         .sidebar {
             position: fixed; top: 0; left: -200px; width: 180px; height: 100vh;
             background: #111; border-right: 2px solid #333; z-index: 100;
             display: flex; flex-direction: column; padding: 15px; box-sizing: border-box;
             transition: left 0.3s ease; box-shadow: 5px 0 15px rgba(0,0,0,0.8);
+            /* FIX: Allow scrolling if content overflows */
+            overflow-y: auto;
         }
         .sidebar.open { left: 0; }
         
@@ -169,10 +123,9 @@
         
         #status { font-weight: bold; font-size: 11px; color: #ffaa00; margin-bottom: 15px; text-align: center; padding: 6px; border-radius: 6px; border: 1px solid rgba(255, 170, 0, 0.3); background: rgba(255, 170, 0, 0.1);}
 
-        /* MODALS (Profile & Mistake Detail) */
+        /* MODALS */
         .modal {
-            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
-            width: 100%; height: 100%; background-color: rgba(0,0,0,0.85);
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85);
             justify-content: center; align-items: center;
         }
         .modal-content {
@@ -182,7 +135,7 @@
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .form-group { display: flex; flex-direction: column; margin-bottom: 10px;}
         .form-group label { font-size: 10px; color: #aaa; margin-bottom: 4px; }
-        .form-group input, .form-group select { background: #1a1a1a; border: 1px solid #333; color: white; padding: 8px; border-radius: 6px; font-size: 12px; }
+        .form-group input, .form-group select { background: #1a1a1a; border: 1px solid #333; color: white; padding: 8px; border-radius: 6px; font-size: 12px; width: 100%; box-sizing: border-box; }
         
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -203,7 +156,6 @@
     </div>
 
     <div class="quad-grid">
-        
         <div class="quad-cell app-card" id="vbox">
             <span class="panel-label">Visual Feed</span>
             <video id="webcam" autoplay playsinline muted></video>
@@ -244,7 +196,6 @@
 
         <div class="quad-cell app-card controls-wrapper">
             <div class="playback-controls" id="playbackControls">
-                
                 <div class="slider-container">
                     <span class="slider-label">Overlay Size</span>
                     <input type="range" id="overlaySlider" min="0" max="2" step="0.1" value="1" orient="vertical" oninput="updateOverlayScale()">
@@ -259,7 +210,6 @@
             </div>
             <div id="wheelPlaceholder" style="color:#555; font-size:12px; font-weight:bold;">Awaiting Session Data...</div>
         </div>
-
     </div>
 
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
@@ -270,28 +220,80 @@
         <button id="btnCam" onclick="startCamera()">📸 Start Cam</button>
         <button id="btnBase" onclick="setBaseline()" disabled>🎯 Lock Target</button>
         <button id="btnRecord" class="btn-green" onclick="toggleRecording()" disabled>🔴 Record</button>
-        <button class="btn-gray" onclick="openProfileModal()" style="margin-top:auto;">⚙️ Profile Set</button>
+        <button class="btn-gray" onclick="openProfileModal()" style="margin-top: 15px;">⚙️ Profile Set</button>
     </div>
 
     <div id="profileModal" class="modal">
-        <div class="modal-content">
-            <h2 style="margin:0 0 10px 0; font-size: 14px; border-bottom: 1px solid #333; padding-bottom: 5px;">Shooter Profile</h2>
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto; width: 90%; max-width: 480px;">
+            <h2 style="margin:0 0 10px 0; font-size: 16px; border-bottom: 1px solid #333; padding-bottom: 5px; color: #fff;">Shooter Diagnostic Profile</h2>
+            
+            <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">⚙️ Firearm Setup</h3>
             <div class="form-group">
-                <label>Firearm Make/Model</label>
+                <label>Firearm Make/Model (Type to Search)</label>
                 <input list="firearmList" id="firearmInput" placeholder="e.g., Glock 19">
                 <datalist id="firearmList">
-                    <option value="Glock 19"><option value="Glock 17"><option value="Sig P320"><option value="Sig P365"><option value="M&P 9">
+                    <option value="Glock 17"><option value="Glock 19"><option value="Glock 19X"><option value="Glock 43X"><option value="Glock 45"><option value="Glock 47">
+                    <option value="Sig P320"><option value="Sig P365"><option value="Sig P365 XMACRO"><option value="Sig P226">
+                    <option value="S&W M&P 9 M2.0"><option value="S&W Shield Plus"><option value="CZ P-10 C"><option value="CZ Shadow 2">
+                    <option value="Walther PDP"><option value="HK VP9"><option value="Springfield Echelon"><option value="Staccato P">
                 </datalist>
             </div>
             <div class="form-grid">
-                <div class="form-group"><label>Age</label><input type="number" id="propAge"></div>
-                <div class="form-group"><label>Gender</label><select id="propGender"><option>Male</option><option>Female</option></select></div>
-                <div class="form-group"><label>Height (cm)</label><input type="number" id="propHeight"></div>
-                <div class="form-group"><label>Weight (kg)</label><input type="number" id="propWeight"></div>
+                <div class="form-group"><label>Caliber</label>
+                    <select id="propCaliber"><option>9mm</option><option>.380 ACP</option><option>.45 ACP</option><option>.40 S&W</option><option>10mm</option><option>.22 LR</option><option>Other</option></select>
+                </div>
+                <div class="form-group"><label>Optic / Sights</label>
+                    <select id="propSights"><option>Iron Sights</option><option>Red Dot (MRDS)</option><option>Laser</option></select>
+                </div>
             </div>
-            <div style="display:flex; gap:10px;">
-                <button class="btn-green" onclick="saveProfile()" style="margin:0;">Save</button>
-                <button class="btn-gray" onclick="closeProfileModal()" style="margin:0;">Close</button>
+
+            <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">🎯 Training Profile</h3>
+            <div class="form-grid">
+                <div class="form-group"><label>Primary Purpose</label>
+                    <select id="propPurpose"><option>Self-Defense / CCW</option><option>Duty (LEO/Mil)</option><option>Competition</option><option>Recreational / Plinking</option></select>
+                </div>
+                <div class="form-group"><label>Experience Level</label>
+                    <select id="propExp"><option>Novice</option><option>Intermediate</option><option>Advanced</option><option>Expert</option></select>
+                </div>
+                <div class="form-group"><label>Live-Fire Frequency</label>
+                    <select id="propFreq"><option>Weekly</option><option>Monthly</option><option>Few times a year</option><option>Rarely</option></select>
+                </div>
+                <div class="form-group"><label>Dry-Fire Frequency</label>
+                    <select id="propDryFreq"><option>Daily</option><option>Weekly</option><option>Monthly</option><option>Rarely</option></select>
+                </div>
+            </div>
+
+            <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">🦾 Biomechanics & Form</h3>
+            <div class="form-grid">
+                <div class="form-group"><label>Hand Dominance</label>
+                    <select id="propHand"><option>Right</option><option>Left</option></select>
+                </div>
+                <div class="form-group"><label>Eye Dominance</label>
+                    <select id="propEye"><option>Right</option><option>Left</option><option>Cross-Dominant</option></select>
+                </div>
+                <div class="form-group"><label>Primary Stance</label>
+                    <select id="propStance"><option>Isosceles</option><option>Weaver</option><option>Chapman / Modified</option></select>
+                </div>
+                <div class="form-group"><label>Grip Style</label>
+                    <select id="propGrip"><option>Thumbs Forward</option><option>Crossed Thumbs</option><option>Teacup</option></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Physical Limitations</label>
+                <select id="propLimits"><option>None</option><option>Astigmatism (Visual)</option><option>Arthritis / Weak Grip</option><option>Prior Hand/Wrist Injury</option></select>
+            </div>
+
+            <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">👤 Physical Metrics</h3>
+            <div class="form-grid">
+                <div class="form-group"><label>Age</label><input type="number" id="propAge" placeholder="e.g., 30"></div>
+                <div class="form-group"><label>Gender</label><select id="propGender"><option>Male</option><option>Female</option></select></div>
+                <div class="form-group"><label>Height (cm)</label><input type="number" id="propHeight" placeholder="e.g., 180"></div>
+                <div class="form-group"><label>Weight (kg)</label><input type="number" id="propWeight" placeholder="e.g., 85"></div>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top: 20px;">
+                <button class="btn-green" onclick="saveProfile()" style="margin:0; flex: 2;">💾 Save Profile</button>
+                <button class="btn-gray" onclick="closeProfileModal()" style="margin:0; flex: 1;">Cancel</button>
             </div>
         </div>
     </div>
@@ -300,15 +302,12 @@
         <div class="modal-content" style="text-align: center;">
             <h2 id="mistakeTitle" style="color: #00aaff; font-size: 20px; border-bottom: none; margin-bottom: 5px;">Mistake Title</h2>
             <div id="mistakeProb" style="font-size: 12px; color: #ffaa00; margin-bottom: 15px; font-weight: bold;">Confidence Score: -- pts</div>
-            
             <p id="mistakeDesc" style="font-size: 13px; color: #ddd; line-height: 1.5; text-align: left; background: #1a1a1a; padding: 12px; border-radius: 8px; border-left: 4px solid #00aaff;">
                 Detailed description goes here.
             </p>
-            
             <a id="mistakeLink" href="#" target="_blank" style="display: block; background: #ff0000; color: white; padding: 12px; border-radius: 8px; text-decoration: none; margin-top: 15px; font-weight: bold; font-size: 14px;">
                 ▶ Watch Correction on YouTube
             </a>
-            
             <button class="btn-gray" onclick="closeMistakeModal()" style="margin-top: 15px; margin-bottom: 0;">Close Window</button>
         </div>
     </div>
@@ -316,6 +315,9 @@
     <canvas id="calcCanvas" width="640" height="480" style="display:none;"></canvas>
 
 <script>
+    // --- GLOBAL PROFILE STATE ---
+    let userProfile = {};
+
     // --- UI/UX INTERACTIONS ---
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
@@ -334,7 +336,30 @@
 
     function openProfileModal() { document.getElementById('profileModal').style.display = 'flex'; toggleSidebar(); }
     function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
-    function saveProfile() { closeProfileModal(); }
+    
+    // NEW: Save Profile Logic
+    function saveProfile() { 
+        userProfile = {
+            firearm: document.getElementById('firearmInput').value,
+            caliber: document.getElementById('propCaliber').value,
+            sights: document.getElementById('propSights').value,
+            purpose: document.getElementById('propPurpose').value,
+            experience: document.getElementById('propExp').value,
+            liveFreq: document.getElementById('propFreq').value,
+            dryFreq: document.getElementById('propDryFreq').value,
+            handDominance: document.getElementById('propHand').value,
+            eyeDominance: document.getElementById('propEye').value,
+            stance: document.getElementById('propStance').value,
+            grip: document.getElementById('propGrip').value,
+            limitations: document.getElementById('propLimits').value,
+            age: document.getElementById('propAge').value,
+            gender: document.getElementById('propGender').value,
+            height: document.getElementById('propHeight').value,
+            weight: document.getElementById('propWeight').value
+        };
+        console.log("Shooter Profile Saved:", userProfile);
+        closeProfileModal(); 
+    }
 
     function openMistakeModal(name, score) {
         let mistake = mistakeDB.find(m => m.name === name);
@@ -366,11 +391,11 @@
 
     const PROXIMITY = 15.0, REQ_FRAMES = 4;
     
-    // FIX: Relaxed thresholds so holding a phone doesn't instantly zero out the score
+    // Relaxed thresholds
     const GYRO_SHOT_THRESHOLD = 80;
     const ACCEL_SHOT_THRESHOLD = 15;  
-    const GYRO_MOVE_THRESH = 20.0;    // Originally 10.0
-    const ACCEL_MOVE_THRESH = 3.5;    // Originally 1.5
+    const GYRO_MOVE_THRESH = 20.0;    
+    const ACCEL_MOVE_THRESH = 3.5;    
 
     const mistakeDB = [
         { name: "Jerking the trigger", tele: ["Down", "Pitch", "Left"], vis: ["Low", "Left"],
@@ -425,8 +450,6 @@
         if (gyro.parentElement) {
             gyro.width = gyro.parentElement.clientWidth;
             gyro.height = gyro.parentElement.clientHeight;
-            
-            // FIX: Redraw the graph automatically if the window resizes so it doesn't stay blank
             if (sensorLog && sensorLog.length > 0) {
                 drawRecordedGraph();
                 applyPlaybackProgress(false); 
@@ -791,6 +814,7 @@
         candidates = candidates.filter(c => c.f > 0);
     }
 
+    // Note: To utilize Hand Dominance logic later, you can access userProfile.handDominance inside this function.
     function getDiag131(x, y) {
         let dx = x - targetCenter.x, dy = targetCenter.y - y;
         let dist = Math.hypot(dx, dy);
@@ -803,9 +827,7 @@
     }
 
     function updateOverlayScale() {
-        if (lastComputedH && !lastComputedH.isDeleted()) {
-            drawOverlay(lastComputedH);
-        }
+        if (lastComputedH && !lastComputedH.isDeleted()) { drawOverlay(lastComputedH); }
     }
 
     function drawOverlay(H) {
@@ -862,8 +884,7 @@
     
     function startPlayback() {
         if(sensorLog.length === 0) return;
-        isAutoPlaying = true;
-        playBtn.innerText = "⏸";
+        isAutoPlaying = true; playBtn.innerText = "⏸";
         if (playbackProgress >= 1) playbackProgress = 0; 
         let videoElement = document.getElementById('webcam');
         if (videoElement.duration) videoElement.play();
@@ -894,8 +915,7 @@
             if (Math.abs(s.gx) > GYRO_SHOT_THRESHOLD || Math.abs(s.gy) > GYRO_SHOT_THRESHOLD) {
                 let now = performance.now();
                 if (!viewer.lastSpike || now - viewer.lastSpike > 500) {
-                    viewer.lastSpike = now;
-                    trigger3DAnimation();
+                    viewer.lastSpike = now; trigger3DAnimation();
                 }
             }
         }
