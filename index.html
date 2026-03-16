@@ -19,43 +19,94 @@
             overflow: hidden; touch-action: none; overscroll-behavior: none;
         }
 
-        /* --- TRICKY TECH INTRO SCREEN --- */
+        /* --- TRICKY TECH INTRO SCREEN (HEXAGON FRACTAL) --- */
         #introScreen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh;
             background: #000000; z-index: 9999; display: flex; flex-direction: column;
             justify-content: center; align-items: center; cursor: pointer;
         }
+        
+        /* Device Rotation Animation */
+        .rotate-prompt {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: #00aaff; font-size: 12px; letter-spacing: 2px; font-weight: bold;
+            text-transform: uppercase; margin-bottom: 30px;
+        }
+        .phone-icon {
+            width: 30px; height: 50px; border: 2px solid #00aaff; border-radius: 6px;
+            position: relative; margin-bottom: 15px; box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+            animation: rotatePhone 2s ease-in-out infinite;
+        }
+        .phone-icon::after {
+            content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+            width: 6px; height: 6px; background: #00aaff; border-radius: 50%;
+        }
+        @keyframes rotatePhone {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(-90deg); }
+            100% { transform: rotate(-90deg); }
+        }
+
+        /* Hide the rotate prompt if the phone is already sideways! */
+        @media (orientation: landscape) {
+            .rotate-prompt { display: none; }
+        }
+
         .tap-to-start {
             font-size: 14px; color: #555; letter-spacing: 4px; font-weight: bold;
             animation: pulse 1.5s infinite; text-transform: uppercase;
         }
         .logo-container {
             display: none; /* Shown after tap */
+            position: relative; width: 300px; height: 300px;
             flex-direction: column; align-items: center; justify-content: center;
-            animation: logoPop 2.8s ease-out forwards;
         }
-        .logo-icon {
-            font-size: 60px; margin-bottom: 10px; color: #00aaff;
-            text-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
+        
+        /* Hexagon SVG Animation */
+        .hex-svg {
+            width: 280px; height: 280px; position: absolute;
+            animation: spinFractal 15s linear infinite; z-index: 1;
         }
-        .logo-text {
-            font-size: 36px; font-weight: 900; font-family: 'Segoe UI', sans-serif; 
-            letter-spacing: 6px; color: #ffffff; text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); margin-left: 6px; /* Offset for letter-spacing */
+        .hex-svg-reverse {
+            width: 240px; height: 240px; position: absolute;
+            animation: spinFractalReverse 10s linear infinite; z-index: 1; opacity: 0.6;
         }
-        .logo-sub {
-            color: #00aaff; font-size: 11px; letter-spacing: 8px; margin-top: 5px;
-            font-weight: bold; text-transform: uppercase; margin-left: 8px;
+        .hex-path { stroke-dasharray: 600; stroke-dashoffset: 600; }
+        .h1 { animation: drawHex 1.5s ease-out forwards; }
+        .h2 { transform-origin: center; transform: rotate(15deg); animation: drawHex 1.5s ease-out 0.2s forwards; }
+        .h3 { transform-origin: center; transform: rotate(30deg); animation: drawHex 1.5s ease-out 0.4s forwards; }
+        .h4 { transform-origin: center; transform: rotate(45deg); animation: drawHex 1.5s ease-out 0.6s forwards; }
+
+        @keyframes drawHex { to { stroke-dashoffset: 0; } }
+        @keyframes spinFractal { to { transform: rotate(360deg); } }
+        @keyframes spinFractalReverse { to { transform: rotate(-360deg); } }
+
+        /* Typography */
+        .tricky-text {
+            position: absolute; font-size: 38px; font-weight: 900;
+            font-family: 'Segoe UI', sans-serif; color: #ffffff;
+            text-transform: uppercase; letter-spacing: 8px;
+            text-shadow: 0 0 15px rgba(0, 170, 255, 0.8);
+            z-index: 2; margin-left: 8px; mix-blend-mode: screen;
+            opacity: 0; animation: textReveal 2s cubic-bezier(0.1, 1, 0.5, 1) 0.6s forwards;
         }
-        .intro-fade-out {
-            animation: fadeOut 0.5s ease-out forwards !important;
+        .tricky-sub {
+            position: absolute; top: 58%; color: #00ffcc;
+            font-size: 11px; letter-spacing: 10px; text-transform: uppercase;
+            font-weight: bold; z-index: 2; margin-left: 10px;
+            opacity: 0; animation: textRevealSub 1.5s cubic-bezier(0.1, 1, 0.5, 1) 1.2s forwards;
         }
 
-        @keyframes logoPop {
-            0% { transform: scale(0.8); opacity: 0; filter: blur(10px); }
-            15% { transform: scale(1.05); opacity: 1; filter: blur(0); }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes textReveal {
+            0% { opacity: 0; transform: scale(0.8); filter: blur(8px); }
+            100% { opacity: 1; transform: scale(1); filter: blur(0); }
         }
+        @keyframes textRevealSub {
+            0% { opacity: 0; transform: translateY(10px); filter: blur(5px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        .intro-fade-out { animation: fadeOut 0.5s ease-out forwards !important; }
         @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
         /* --------------------------------- */
         
@@ -201,11 +252,24 @@
 <body>
 
     <div id="introScreen" onclick="launchTrickyTech()">
+        <div class="rotate-prompt" id="rotatePrompt">
+            <div class="phone-icon"></div>
+            <div>Rotate Device</div>
+        </div>
         <div class="tap-to-start" id="tapText">Tap to Initialize System</div>
+        
         <div class="logo-container" id="logoContainer">
-            <div class="logo-icon">🎯</div>
-            <div class="logo-text">Tricky Tech</div>
-            <div class="logo-sub">Tactical Systems</div>
+            <svg class="hex-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <polygon class="hex-path h1" points="100,10 178,55 178,145 100,190 22,145 22,55" fill="none" stroke="#00aaff" stroke-width="2"/>
+                <polygon class="hex-path h2" points="100,25 165,62.5 165,137.5 100,175 35,137.5 35,62.5" fill="none" stroke="#00ffcc" stroke-width="1.5"/>
+                <polygon class="hex-path h3" points="100,40 152,70 152,130 100,160 48,130 48,70" fill="none" stroke="#00aaff" stroke-width="1"/>
+            </svg>
+            <svg class="hex-svg-reverse" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <polygon class="hex-path h4" points="100,20 169,60 169,140 100,180 31,140 31,60" fill="none" stroke="#ffffff" stroke-width="0.5"/>
+            </svg>
+            
+            <div class="tricky-text">Tricky Tech</div>
+            <div class="tricky-sub">Tactical Systems</div>
         </div>
     </div>
 
@@ -449,22 +513,29 @@
         if (appHasStarted) return;
         appHasStarted = true;
 
-        // 1. Request Fullscreen instantly upon user tap
+        // Request Fullscreen AND Force Landscape mode
         if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen().catch(e => console.log(e));
+            document.documentElement.requestFullscreen().then(() => {
+                // Once in full screen, lock to landscape if supported by device
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock('landscape').catch(e => console.log('Orientation lock failed:', e));
+                }
+            }).catch(e => console.log(e));
         }
 
-        // 2. Hide "Tap to Start", Show Tricky Tech Animation
+        // Hide Prompts, Show Animation
         document.getElementById('tapText').style.display = 'none';
+        let rotatePrompt = document.getElementById('rotatePrompt');
+        if(rotatePrompt) rotatePrompt.style.display = 'none';
+        
         document.getElementById('logoContainer').style.display = 'flex';
 
-        // 3. Wait 3 seconds, fade out intro, reveal app
         setTimeout(() => {
             const intro = document.getElementById('introScreen');
             intro.classList.add('intro-fade-out');
             setTimeout(() => { 
                 intro.style.display = 'none'; 
-                resizeCanvases(); // Ensure UI draws correctly after reveal
+                resizeCanvases();
             }, 500);
         }, 3000);
     }
@@ -525,7 +596,6 @@
     }
     function closeSettingsModal() { document.getElementById('settingsModal').style.display = 'none'; }
 
-    // SAVE PROFILE LOGIC
     function saveProfile() { 
         userProfile = {
             firearm: document.getElementById('firearmInput').value,
@@ -549,7 +619,6 @@
         closeProfileModal(); 
     }
 
-    // SAVE SETTINGS LOGIC
     function saveSettings() {
         appSettings = {
             shortLight: document.getElementById('setShortLight').value,
@@ -591,7 +660,6 @@
     let lastComputedH = null;
 
     const PROXIMITY = 15.0, REQ_FRAMES = 4;
-    
     const GYRO_SHOT_THRESHOLD = 80;
     const ACCEL_SHOT_THRESHOLD = 15;  
     const GYRO_MOVE_THRESH = 20.0;    
