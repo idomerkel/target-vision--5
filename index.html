@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, landscape">
-    <title>Smart Target - Quad Grid Engine</title>
+    <title>Smart Target - Tricky Tech</title>
     
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script>var Module = { onRuntimeInitialized: function() { onOpenCvReady(); } };</script>
@@ -15,9 +15,49 @@
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background-color: #000000; color: white; margin: 0; padding: 6px; box-sizing: border-box;
             display: flex; flex-direction: column; gap: 6px; 
-            height: 100dvh; width: 100%; /* FIX: Mobile viewport and even padding */
+            height: 100dvh; width: 100%; 
             overflow: hidden; touch-action: none; overscroll-behavior: none;
         }
+
+        /* --- TRICKY TECH INTRO SCREEN --- */
+        #introScreen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh;
+            background: #000000; z-index: 9999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; cursor: pointer;
+        }
+        .tap-to-start {
+            font-size: 14px; color: #555; letter-spacing: 4px; font-weight: bold;
+            animation: pulse 1.5s infinite; text-transform: uppercase;
+        }
+        .logo-container {
+            display: none; /* Shown after tap */
+            flex-direction: column; align-items: center; justify-content: center;
+            animation: logoPop 2.8s ease-out forwards;
+        }
+        .logo-icon {
+            font-size: 60px; margin-bottom: 10px; color: #00aaff;
+            text-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
+        }
+        .logo-text {
+            font-size: 36px; font-weight: 900; font-family: 'Segoe UI', sans-serif; 
+            letter-spacing: 6px; color: #ffffff; text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); margin-left: 6px; /* Offset for letter-spacing */
+        }
+        .logo-sub {
+            color: #00aaff; font-size: 11px; letter-spacing: 8px; margin-top: 5px;
+            font-weight: bold; text-transform: uppercase; margin-left: 8px;
+        }
+        .intro-fade-out {
+            animation: fadeOut 0.5s ease-out forwards !important;
+        }
+
+        @keyframes logoPop {
+            0% { transform: scale(0.8); opacity: 0; filter: blur(10px); }
+            15% { transform: scale(1.05); opacity: 1; filter: blur(0); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+        /* --------------------------------- */
         
         /* APP CARDS */
         .app-card {
@@ -113,17 +153,17 @@
         
         /* --- COLLAPSIBLE AD COLUMN (RIGHT) --- */
         .ad-sidebar {
-            position: fixed; top: 0; right: -20vw; /* Hidden off-screen */
-            width: 10vw; min-width: 80px; /* 10% width, but no smaller than 80px */
+            position: fixed; top: 0; right: -20vw;
+            width: 10vw; min-width: 80px; 
             height: 100vh; background: #111; border-left: 2px solid #333; z-index: 100;
             display: flex; flex-direction: column; padding: 10px; box-sizing: border-box;
             transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.8);
             overflow-y: auto; align-items: center; gap: 15px;
         }
         .ad-sidebar.open { right: 0; }
-        .ad-banner { width: 100%; border-radius: 6px; border: 1px solid #444; overflow: hidden; display: block; text-decoration: none; }
+        .ad-banner { width: 100%; border-radius: 6px; border: 1px solid #444; overflow: hidden; display: block; text-decoration: none; flex-shrink: 0;}
         .ad-banner img { width: 100%; height: auto; display: block; object-fit: contain; background: #fff;}
-        .ad-label { font-size: 9px; color: #888; font-weight: bold; text-transform: uppercase; text-align: center; border-bottom: 1px solid #333; padding-bottom: 5px; width: 100%; }
+        .ad-label { font-size: 9px; color: #888; font-weight: bold; text-transform: uppercase; text-align: center; border-bottom: 1px solid #333; padding-bottom: 5px; width: 100%; flex-shrink: 0;}
 
         button { 
             background: #007bff; color: white; border: none; padding: 12px 8px;
@@ -154,11 +194,20 @@
         
         optgroup { color: #aaa; font-style: normal; font-weight: bold; background: #222; }
         
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
+
+    <div id="introScreen" onclick="launchTrickyTech()">
+        <div class="tap-to-start" id="tapText">Tap to Initialize System</div>
+        <div class="logo-container" id="logoContainer">
+            <div class="logo-icon">🎯</div>
+            <div class="logo-text">Tricky Tech</div>
+            <div class="logo-sub">Tactical Systems</div>
+        </div>
+    </div>
 
     <div class="header-row">
         <div class="menu-btn" onclick="toggleSidebar()">☰</div>
@@ -249,17 +298,17 @@
         <a href="https://www.caliber3range.com/" target="_blank" class="ad-banner">
             <img src="https://www.caliber3range.com/StaticFiles/Products/0506202416103845.jpg" alt="Caliber 3 Gear">
         </a>
-
         <a href="https://www.meprolight.com/" target="_blank" class="ad-banner" style="background: #fff; display: flex; align-items: center; justify-content: center; padding: 5px;">
-            <img src="https://www.meprolight.com/wp-content/uploads/2025/09/mepro-mpo-pro-f-enclosed-reflex-sight.png" alt="Meprolight Optic" style="width: 100%; height: auto; object-fit: contain;">
+            <img src="https://www.meprolight.com/wp-content/uploads/2025/09/mepro-mpo-pro-f-enclosed-reflex-sight.png" alt="Meprolight Optic">
         </a>
-
         <a href="https://holosun.com/products/reflex-sight/eps/eps-carry-green-mrs.html" target="_blank" class="ad-banner" style="background: #fff; display: flex; align-items: center; justify-content: center; padding: 5px;">
-            <img src="https://image.primaryarms.com/production/SSP%20Applications/NetSuite%20Inc.%20-%20SCA%20Mont%20Blanc/Development/img/EPS-CARRY-RD-6_01.jpg?resizeid=7&resizeh=1100&resizew=1100" alt="Holosun EPS Carry" style="width: 100%; height: auto; object-fit: contain;">
+            <img src="https://image.primaryarms.com/production/SSP%20Applications/NetSuite%20Inc.%20-%20SCA%20Mont%20Blanc/Development/img/EPS-CARRY-RD-6_01.jpg?resizeid=7&resizeh=1100&resizew=1100" alt="Holosun EPS Carry">
         </a>
-
         <a href="https://holosun.com/" target="_blank" class="ad-banner" style="background: #fff; display: flex; align-items: center; justify-content: center; padding: 5px;">
-            <img src="https://image.primaryarms.com/production/SSP%20Applications/NetSuite%20Inc.%20-%20SCA%20Mont%20Blanc/Development/img/HE507C-GR-X2-ACSS_00.jpg?resizeid=7&resizeh=1100&resizew=1100" alt="Holosun 507C ACSS" style="width: 100%; height: auto; object-fit: contain;">
+            <img src="https://image.primaryarms.com/production/SSP%20Applications/NetSuite%20Inc.%20-%20SCA%20Mont%20Blanc/Development/img/HE507C-GR-X2-ACSS_00.jpg?resizeid=7&resizeh=1100&resizew=1100" alt="Holosun 507C ACSS">
+        </a>
+        <a href="https://www.brownells.com/" target="_blank" class="ad-banner" style="background: #fff; display: flex; align-items: center; justify-content: center; padding: 5px;">
+            <img src="https://www.brownells.com/cdn-cgi/image/width=178,format=auto,fit=crop/globalassets/10006/23/430114603_1w.jpg" alt="Brownells Gear">
         </a>
     </div>
 
@@ -325,154 +374,40 @@
             <div class="form-group">
                 <label>Firearm Make/Model</label>
                 <select id="firearmInput">
-                    <optgroup label="Glock">
-                        <option>Glock 17</option>
-                        <option>Glock 19</option>
-                        <option>Glock 19X</option>
-                        <option>Glock 26</option>
-                        <option>Glock 34</option>
-                        <option>Glock 43X</option>
-                        <option>Glock 45</option>
-                        <option>Glock 47</option>
-                    </optgroup>
-                    <optgroup label="Sig Sauer">
-                        <option>Sig P320</option>
-                        <option>Sig P365</option>
-                        <option>Sig P365XL</option>
-                        <option>Sig P365 XMACRO</option>
-                        <option>Sig P226</option>
-                        <option>Sig P229</option>
-                    </optgroup>
-                    <optgroup label="Smith & Wesson">
-                        <option>S&W M&P 9 M2.0</option>
-                        <option>S&W Shield Plus</option>
-                        <option>S&W SD9 VE</option>
-                    </optgroup>
-                    <optgroup label="CZ">
-                        <option>CZ 75 B</option>
-                        <option>CZ P-10 C</option>
-                        <option>CZ Shadow 2</option>
-                        <option>CZ P-07</option>
-                    </optgroup>
-                    <optgroup label="Beretta">
-                        <option>Beretta 92FS</option>
-                        <option>Beretta M9A4</option>
-                        <option>Beretta APX A1</option>
-                    </optgroup>
-                    <optgroup label="HK & Walther">
-                        <option>HK VP9</option>
-                        <option>HK P30</option>
-                        <option>Walther PDP</option>
-                        <option>Walther PPQ</option>
-                    </optgroup>
-                    <optgroup label="Springfield & 1911">
-                        <option>Springfield Hellcat</option>
-                        <option>Springfield Echelon</option>
-                        <option>Staccato P</option>
-                        <option>Staccato C2</option>
-                    </optgroup>
-                    <optgroup label="Canik">
-                        <option>Canik TP9SFx</option>
-                        <option>Canik Mete SFT</option>
-                    </optgroup>
+                    <optgroup label="Glock"><option>Glock 17</option><option>Glock 19</option><option>Glock 19X</option><option>Glock 26</option><option>Glock 34</option><option>Glock 43X</option><option>Glock 45</option><option>Glock 47</option></optgroup>
+                    <optgroup label="Sig Sauer"><option>Sig P320</option><option>Sig P365</option><option>Sig P365XL</option><option>Sig P365 XMACRO</option><option>Sig P226</option><option>Sig P229</option></optgroup>
+                    <optgroup label="Smith & Wesson"><option>S&W M&P 9 M2.0</option><option>S&W Shield Plus</option><option>S&W SD9 VE</option></optgroup>
+                    <optgroup label="CZ"><option>CZ 75 B</option><option>CZ P-10 C</option><option>CZ Shadow 2</option><option>CZ P-07</option></optgroup>
+                    <optgroup label="Beretta"><option>Beretta 92FS</option><option>Beretta M9A4</option><option>Beretta APX A1</option></optgroup>
+                    <optgroup label="HK & Walther"><option>HK VP9</option><option>HK P30</option><option>Walther PDP</option><option>Walther PPQ</option></optgroup>
+                    <optgroup label="Springfield & 1911"><option>Springfield Hellcat</option><option>Springfield Echelon</option><option>Staccato P</option><option>Staccato C2</option></optgroup>
+                    <optgroup label="Canik"><option>Canik TP9SFx</option><option>Canik Mete SFT</option></optgroup>
                     <option>Other / Not Listed</option>
                 </select>
             </div>
             <div class="form-grid">
-                <div class="form-group"><label>Caliber</label>
-                    <select id="propCaliber">
-                        <option>9mm</option>
-                        <option>.380 ACP</option>
-                        <option>.45 ACP</option>
-                        <option>.40 S&W</option>
-                        <option>10mm</option>
-                        <option>.22 LR</option>
-                        <option>Other</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Optic / Sights</label>
-                    <select id="propSights">
-                        <option>Iron Sights</option>
-                        <option>Red Dot (MRDS)</option>
-                        <option>Laser</option>
-                    </select>
-                </div>
+                <div class="form-group"><label>Caliber</label><select id="propCaliber"><option>9mm</option><option>.380 ACP</option><option>.45 ACP</option><option>.40 S&W</option><option>10mm</option><option>.22 LR</option><option>Other</option></select></div>
+                <div class="form-group"><label>Optic / Sights</label><select id="propSights"><option>Iron Sights</option><option>Red Dot (MRDS)</option><option>Laser</option></select></div>
             </div>
 
             <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">🎯 Training Profile</h3>
             <div class="form-grid">
-                <div class="form-group"><label>Primary Purpose</label>
-                    <select id="propPurpose">
-                        <option>Self-Defense / CCW</option>
-                        <option>Duty (LEO/Mil)</option>
-                        <option>Competition</option>
-                        <option>Recreational / Plinking</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Experience Level</label>
-                    <select id="propExp">
-                        <option>Novice</option>
-                        <option>Intermediate</option>
-                        <option>Advanced</option>
-                        <option>Expert</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Live-Fire Frequency</label>
-                    <select id="propFreq">
-                        <option>Weekly</option>
-                        <option>Monthly</option>
-                        <option>Few times a year</option>
-                        <option>Rarely</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Dry-Fire Frequency</label>
-                    <select id="propDryFreq">
-                        <option>Daily</option>
-                        <option>Weekly</option>
-                        <option>Monthly</option>
-                        <option>Rarely</option>
-                    </select>
-                </div>
+                <div class="form-group"><label>Primary Purpose</label><select id="propPurpose"><option>Self-Defense / CCW</option><option>Duty (LEO/Mil)</option><option>Competition</option><option>Recreational / Plinking</option></select></div>
+                <div class="form-group"><label>Experience Level</label><select id="propExp"><option>Novice</option><option>Intermediate</option><option>Advanced</option><option>Expert</option></select></div>
+                <div class="form-group"><label>Live-Fire Frequency</label><select id="propFreq"><option>Weekly</option><option>Monthly</option><option>Few times a year</option><option>Rarely</option></select></div>
+                <div class="form-group"><label>Dry-Fire Frequency</label><select id="propDryFreq"><option>Daily</option><option>Weekly</option><option>Monthly</option><option>Rarely</option></select></div>
             </div>
 
             <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">🦾 Biomechanics & Form</h3>
             <div class="form-grid">
-                <div class="form-group"><label>Hand Dominance</label>
-                    <select id="propHand">
-                        <option>Right</option>
-                        <option>Left</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Eye Dominance</label>
-                    <select id="propEye">
-                        <option>Right</option>
-                        <option>Left</option>
-                        <option>Cross-Dominant</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Primary Stance</label>
-                    <select id="propStance">
-                        <option>Isosceles</option>
-                        <option>Weaver</option>
-                        <option>Chapman / Modified</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Grip Style</label>
-                    <select id="propGrip">
-                        <option>Thumbs Forward</option>
-                        <option>Crossed Thumbs</option>
-                        <option>Teacup</option>
-                    </select>
-                </div>
+                <div class="form-group"><label>Hand Dominance</label><select id="propHand"><option>Right</option><option>Left</option></select></div>
+                <div class="form-group"><label>Eye Dominance</label><select id="propEye"><option>Right</option><option>Left</option><option>Cross-Dominant</option></select></div>
+                <div class="form-group"><label>Primary Stance</label><select id="propStance"><option>Isosceles</option><option>Weaver</option><option>Chapman / Modified</option></select></div>
+                <div class="form-group"><label>Grip Style</label><select id="propGrip"><option>Thumbs Forward</option><option>Crossed Thumbs</option><option>Teacup</option></select></div>
             </div>
             <div class="form-group">
                 <label>Physical Limitations</label>
-                <select id="propLimits">
-                    <option>None</option>
-                    <option>Astigmatism (Visual)</option>
-                    <option>Arthritis / Weak Grip</option>
-                    <option>Prior Hand/Wrist Injury</option>
-                </select>
+                <select id="propLimits"><option>None</option><option>Astigmatism (Visual)</option><option>Arthritis / Weak Grip</option><option>Prior Hand/Wrist Injury</option></select>
             </div>
 
             <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">👤 Physical Metrics</h3>
@@ -507,6 +442,33 @@
     <canvas id="calcCanvas" width="640" height="480" style="display:none;"></canvas>
 
 <script>
+    // --- BOOT SEQUENCE LOGIC ---
+    let appHasStarted = false;
+
+    function launchTrickyTech() {
+        if (appHasStarted) return;
+        appHasStarted = true;
+
+        // 1. Request Fullscreen instantly upon user tap
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(e => console.log(e));
+        }
+
+        // 2. Hide "Tap to Start", Show Tricky Tech Animation
+        document.getElementById('tapText').style.display = 'none';
+        document.getElementById('logoContainer').style.display = 'flex';
+
+        // 3. Wait 3 seconds, fade out intro, reveal app
+        setTimeout(() => {
+            const intro = document.getElementById('introScreen');
+            intro.classList.add('intro-fade-out');
+            setTimeout(() => { 
+                intro.style.display = 'none'; 
+                resizeCanvases(); // Ensure UI draws correctly after reveal
+            }, 500);
+        }, 3000);
+    }
+
     // --- GLOBAL STATE ---
     let userProfile = {};
     let appSettings = {
@@ -521,7 +483,7 @@
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebarOverlay');
-        document.getElementById('adSidebar').classList.remove('open'); // Close Ad bar if open
+        document.getElementById('adSidebar').classList.remove('open');
         if (sidebar.classList.contains('open')) {
             sidebar.classList.remove('open'); overlay.style.display = 'none';
         } else {
@@ -532,7 +494,7 @@
     function toggleAdSidebar() {
         const adSidebar = document.getElementById('adSidebar');
         const overlay = document.getElementById('sidebarOverlay');
-        document.getElementById('sidebar').classList.remove('open'); // Close left bar if open
+        document.getElementById('sidebar').classList.remove('open'); 
         if (adSidebar.classList.contains('open')) {
             adSidebar.classList.remove('open'); overlay.style.display = 'none';
         } else {
@@ -630,49 +592,24 @@
 
     const PROXIMITY = 15.0, REQ_FRAMES = 4;
     
-    // RELAXED THRESHOLDS for mobile
     const GYRO_SHOT_THRESHOLD = 80;
     const ACCEL_SHOT_THRESHOLD = 15;  
     const GYRO_MOVE_THRESH = 20.0;    
     const ACCEL_MOVE_THRESH = 3.5;    
 
     const mistakeDB = [
-        { name: "Jerking the trigger", tele: ["Down", "Pitch", "Left"], vis: ["Low", "Left"],
-          desc: "Rapidly slapping or yanking the trigger instead of applying a smooth, continuous rearward press. This physically pulls the muzzle down and to the side right as the shot breaks.",
-          url: "https://www.youtube.com/results?search_query=pistol+jerking+the+trigger+correction" },
-        { name: "Anticipating Recoil", tele: ["Down", "Pitch"], vis: ["Low"],
-          desc: "Your brain knows an explosion is about to happen, so your hands subconsciously push forward and down against the gun at the last microsecond to fight the expected recoil.",
-          url: "https://www.youtube.com/results?search_query=pistol+anticipating+recoil+flinch" },
-        { name: "Heeling", tele: ["Up", "Pitch"], vis: ["High"],
-          desc: "Applying abrupt, uneven pressure with the heel of the hand (bottom of the palm) while firing, causing the muzzle to pitch upwards.",
-          url: "https://www.youtube.com/results?search_query=pistol+heeling+mistake" },
-        { name: "Too much trigger finger", tele: ["Right", "Yaw"], vis: ["Right"],
-          desc: "Placing the trigger too far deep into the finger crease. When you pull, the mechanics of your finger curl pull the entire gun horizontally towards your firing hand.",
-          url: "https://www.youtube.com/results?search_query=pistol+too+much+trigger+finger" },
-        { name: "Too little trigger finger", tele: ["Left", "Yaw"], vis: ["Left"],
-          desc: "Using only the extreme tip of your finger on the trigger. When pressing, you end up pushing the trigger sideways away from your firing hand rather than straight back.",
-          url: "https://www.youtube.com/results?search_query=pistol+too+little+trigger+finger" },
-        { name: "Thumb Pressure", tele: ["Right", "Roll"], vis: ["Right"],
-          desc: "Pushing against the frame of the gun with either your firing thumb or support thumb, which acts like a lever and shifts your sights horizontally.",
-          url: "https://www.youtube.com/results?search_query=pistol+thumb+pressure+grip" },
-        { name: "Breaking wrist up", tele: ["Up", "Pitch"], vis: ["High"],
-          desc: "Allowing the wrist to unlock and bend upward slightly during the trigger pull, usually due to a lack of forearm tension.",
-          url: "https://www.youtube.com/results?search_query=pistol+breaking+wrist+up" },
-        { name: "Breaking wrist down", tele: ["Down", "Pitch"], vis: ["Low"],
-          desc: "Unlocking the wrist downward right as the shot fires. Often tied to recoil anticipation.",
-          url: "https://www.youtube.com/results?search_query=pistol+breaking+wrist+down" },
-        { name: "Milking the grip", tele: ["Down", "Roll", "Left"], vis: ["Low", "Left"],
-          desc: "Contracting the lower fingers of the firing hand at the exact same time your index finger pulls the trigger. Your hand acts like a fist closing.",
-          url: "https://www.youtube.com/results?search_query=pistol+milking+the+grip" },
-        { name: "Riding the recoil", tele: ["Up", "Pitch"], vis: ["High"],
-          desc: "Letting the gun completely dictate the recoil path upward without maintaining the necessary isometric grip tension to snap it back to center.",
-          url: "https://www.youtube.com/results?search_query=pistol+riding+recoil" },
-        { name: "Breathing offset", tele: ["Up", "Down"], vis: ["High", "Low"],
-          desc: "Firing at inconsistent points during your breathing cycle. The expansion of your chest naturally raises and lowers your arms.",
-          url: "https://www.youtube.com/results?search_query=pistol+breathing+control" },
-        { name: "Grip Tension", tele: ["Left", "Right", "Roll"], vis: ["Left", "Right"],
-          desc: "Unequal or shifting pressure between the firing hand and support hand, creating a 'tug of war' that pulls the gun off target laterally.",
-          url: "https://www.youtube.com/results?search_query=pistol+grip+tension" }
+        { name: "Jerking the trigger", tele: ["Down", "Pitch", "Left"], vis: ["Low", "Left"], desc: "Rapidly slapping or yanking the trigger instead of applying a smooth, continuous rearward press. This physically pulls the muzzle down and to the side right as the shot breaks.", url: "https://www.youtube.com/results?search_query=pistol+jerking+the+trigger+correction" },
+        { name: "Anticipating Recoil", tele: ["Down", "Pitch"], vis: ["Low"], desc: "Your brain knows an explosion is about to happen, so your hands subconsciously push forward and down against the gun at the last microsecond to fight the expected recoil.", url: "https://www.youtube.com/results?search_query=pistol+anticipating+recoil+flinch" },
+        { name: "Heeling", tele: ["Up", "Pitch"], vis: ["High"], desc: "Applying abrupt, uneven pressure with the heel of the hand (bottom of the palm) while firing, causing the muzzle to pitch upwards.", url: "https://www.youtube.com/results?search_query=pistol+heeling+mistake" },
+        { name: "Too much trigger finger", tele: ["Right", "Yaw"], vis: ["Right"], desc: "Placing the trigger too far deep into the finger crease. When you pull, the mechanics of your finger curl pull the entire gun horizontally towards your firing hand.", url: "https://www.youtube.com/results?search_query=pistol+too+much+trigger+finger" },
+        { name: "Too little trigger finger", tele: ["Left", "Yaw"], vis: ["Left"], desc: "Using only the extreme tip of your finger on the trigger. When pressing, you end up pushing the trigger sideways away from your firing hand rather than straight back.", url: "https://www.youtube.com/results?search_query=pistol+too+little+trigger+finger" },
+        { name: "Thumb Pressure", tele: ["Right", "Roll"], vis: ["Right"], desc: "Pushing against the frame of the gun with either your firing thumb or support thumb, which acts like a lever and shifts your sights horizontally.", url: "https://www.youtube.com/results?search_query=pistol+thumb+pressure+grip" },
+        { name: "Breaking wrist up", tele: ["Up", "Pitch"], vis: ["High"], desc: "Allowing the wrist to unlock and bend upward slightly during the trigger pull, usually due to a lack of forearm tension.", url: "https://www.youtube.com/results?search_query=pistol+breaking+wrist+up" },
+        { name: "Breaking wrist down", tele: ["Down", "Pitch"], vis: ["Low"], desc: "Unlocking the wrist downward right as the shot fires. Often tied to recoil anticipation.", url: "https://www.youtube.com/results?search_query=pistol+breaking+wrist+down" },
+        { name: "Milking the grip", tele: ["Down", "Roll", "Left"], vis: ["Low", "Left"], desc: "Contracting the lower fingers of the firing hand at the exact same time your index finger pulls the trigger. Your hand acts like a fist closing.", url: "https://www.youtube.com/results?search_query=pistol+milking+the+grip" },
+        { name: "Riding the recoil", tele: ["Up", "Pitch"], vis: ["High"], desc: "Letting the gun completely dictate the recoil path upward without maintaining the necessary isometric grip tension to snap it back to center.", url: "https://www.youtube.com/results?search_query=pistol+riding+recoil" },
+        { name: "Breathing offset", tele: ["Up", "Down"], vis: ["High", "Low"], desc: "Firing at inconsistent points during your breathing cycle. The expansion of your chest naturally raises and lowers your arms.", url: "https://www.youtube.com/results?search_query=pistol+breathing+control" },
+        { name: "Grip Tension", tele: ["Left", "Right", "Roll"], vis: ["Left", "Right"], desc: "Unequal or shifting pressure between the firing hand and support hand, creating a 'tug of war' that pulls the gun off target laterally.", url: "https://www.youtube.com/results?search_query=pistol+grip+tension" }
     ];
 
     function onOpenCvReady() { 
