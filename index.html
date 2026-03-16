@@ -35,7 +35,7 @@
             font-size: 20px; cursor: pointer; flex-shrink: 0; transition: background 0.2s;
         }
         .menu-btn:active, .fs-btn:active, .ad-btn:active { background: #333; }
-        .ad-btn { font-size: 16px; } /* Slightly smaller icon for the ad button */
+        .ad-btn { font-size: 16px; } 
 
         .gyro-container { flex: 1; height: 100%; position: relative; }
         .panel-label { 
@@ -122,7 +122,7 @@
         }
         .ad-sidebar.open { right: 0; }
         .ad-banner { width: 100%; border-radius: 6px; border: 1px solid #444; overflow: hidden; display: block; text-decoration: none; }
-        .ad-banner img { width: 100%; height: auto; display: block; }
+        .ad-banner img { width: 100%; height: auto; display: block; object-fit: contain; background: #fff;}
         .ad-label { font-size: 9px; color: #888; font-weight: bold; text-transform: uppercase; text-align: center; border-bottom: 1px solid #333; padding-bottom: 5px; width: 100%; }
 
         button { 
@@ -248,9 +248,16 @@
             <img src="https://www.caliber3range.com/StaticFiles/Products/0506202416103845.jpg" alt="Caliber 3 Gear">
         </a>
 
-        <a href="https://www.meprolight.com/product/mepro-mpo-pro-f/" target="_blank" class="ad-banner" style="background: #1a1a1a; padding: 10px 5px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;">
-            <span style="color: #00aaff; font-size: 10px; font-weight: bold; line-height: 1.2;">Mepro<br>MPO-PRO-F</span>
-            <span style="color: #fff; font-size: 8px; background: #333; padding: 3px 6px; border-radius: 4px;">Shop Optic</span>
+        <a href="https://www.meprolight.com/" target="_blank" class="ad-banner" style="background: #fff; display: flex; align-items: center; justify-content: center; padding: 5px;">
+            <img src="https://www.meprolight.com/wp-content/uploads/2025/09/mepro-mpo-pro-f-enclosed-reflex-sight.png" alt="Meprolight Optic" style="width: 100%; height: auto; object-fit: contain;">
+        </a>
+
+        <a href="https://holosun.com/products/reflex-sight/eps/eps-carry-green-mrs.html" target="_blank" class="ad-banner" style="background: #fff; display: flex; align-items: center; justify-content: center; padding: 5px;">
+            <img src="https://image.primaryarms.com/production/SSP%20Applications/NetSuite%20Inc.%20-%20SCA%20Mont%20Blanc/Development/img/EPS-CARRY-RD-6_01.jpg?resizeid=7&resizeh=1100&resizew=1100" alt="Holosun EPS Carry" style="width: 100%; height: auto; object-fit: contain;">
+        </a>
+
+        <a href="https://holosun.com/" target="_blank" class="ad-banner" style="background: #fff; display: flex; align-items: center; justify-content: center; padding: 5px;">
+            <img src="https://image.primaryarms.com/production/SSP%20Applications/NetSuite%20Inc.%20-%20SCA%20Mont%20Blanc/Development/img/HE507C-GR-X2-ACSS_00.jpg?resizeid=7&resizeh=1100&resizew=1100" alt="Holosun 507C ACSS" style="width: 100%; height: auto; object-fit: contain;">
         </a>
     </div>
 
