@@ -105,7 +105,6 @@
             background: #111; border-right: 2px solid #333; z-index: 100;
             display: flex; flex-direction: column; padding: 15px; box-sizing: border-box;
             transition: left 0.3s ease; box-shadow: 5px 0 15px rgba(0,0,0,0.8);
-            /* FIX: Allow scrolling if content overflows */
             overflow-y: auto;
         }
         .sidebar.open { left: 0; }
@@ -136,6 +135,9 @@
         .form-group { display: flex; flex-direction: column; margin-bottom: 10px;}
         .form-group label { font-size: 10px; color: #aaa; margin-bottom: 4px; }
         .form-group input, .form-group select { background: #1a1a1a; border: 1px solid #333; color: white; padding: 8px; border-radius: 6px; font-size: 12px; width: 100%; box-sizing: border-box; }
+        
+        /* Style for Option Groups in Select */
+        optgroup { color: #aaa; font-style: normal; font-weight: bold; background: #222; }
         
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -229,44 +231,60 @@
             
             <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">⚙️ Firearm Setup</h3>
             <div class="form-group">
-                <label>Firearm Make/Model (Type to Search)</label>
-                <input list="firearmList" id="firearmInput" placeholder="e.g., Glock 19" autocomplete="off">
-                <datalist id="firearmList">
-                    <option value="Glock 17"></option>
-                    <option value="Glock 19"></option>
-                    <option value="Glock 19X"></option>
-                    <option value="Glock 26"></option>
-                    <option value="Glock 34"></option>
-                    <option value="Glock 43X"></option>
-                    <option value="Glock 45"></option>
-                    <option value="Glock 47"></option>
-                    <option value="Sig P320"></option>
-                    <option value="Sig P365"></option>
-                    <option value="Sig P365XL"></option>
-                    <option value="Sig P365 XMACRO"></option>
-                    <option value="Sig P226"></option>
-                    <option value="Sig P229"></option>
-                    <option value="S&W M&P 9 M2.0"></option>
-                    <option value="S&W Shield Plus"></option>
-                    <option value="S&W SD9 VE"></option>
-                    <option value="CZ 75 B"></option>
-                    <option value="CZ P-10 C"></option>
-                    <option value="CZ Shadow 2"></option>
-                    <option value="CZ P-07"></option>
-                    <option value="Beretta 92FS"></option>
-                    <option value="Beretta M9A4"></option>
-                    <option value="Beretta APX A1"></option>
-                    <option value="HK VP9"></option>
-                    <option value="HK P30"></option>
-                    <option value="Walther PDP"></option>
-                    <option value="Walther PPQ"></option>
-                    <option value="Springfield Hellcat"></option>
-                    <option value="Springfield Echelon"></option>
-                    <option value="Staccato P"></option>
-                    <option value="Staccato C2"></option>
-                    <option value="Canik TP9SFx"></option>
-                    <option value="Canik Mete SFT"></option>
-                </datalist>
+                <label>Firearm Make/Model</label>
+                <select id="firearmInput">
+                    <optgroup label="Glock">
+                        <option>Glock 17</option>
+                        <option>Glock 19</option>
+                        <option>Glock 19X</option>
+                        <option>Glock 26</option>
+                        <option>Glock 34</option>
+                        <option>Glock 43X</option>
+                        <option>Glock 45</option>
+                        <option>Glock 47</option>
+                    </optgroup>
+                    <optgroup label="Sig Sauer">
+                        <option>Sig P320</option>
+                        <option>Sig P365</option>
+                        <option>Sig P365XL</option>
+                        <option>Sig P365 XMACRO</option>
+                        <option>Sig P226</option>
+                        <option>Sig P229</option>
+                    </optgroup>
+                    <optgroup label="Smith & Wesson">
+                        <option>S&W M&P 9 M2.0</option>
+                        <option>S&W Shield Plus</option>
+                        <option>S&W SD9 VE</option>
+                    </optgroup>
+                    <optgroup label="CZ">
+                        <option>CZ 75 B</option>
+                        <option>CZ P-10 C</option>
+                        <option>CZ Shadow 2</option>
+                        <option>CZ P-07</option>
+                    </optgroup>
+                    <optgroup label="Beretta">
+                        <option>Beretta 92FS</option>
+                        <option>Beretta M9A4</option>
+                        <option>Beretta APX A1</option>
+                    </optgroup>
+                    <optgroup label="HK & Walther">
+                        <option>HK VP9</option>
+                        <option>HK P30</option>
+                        <option>Walther PDP</option>
+                        <option>Walther PPQ</option>
+                    </optgroup>
+                    <optgroup label="Springfield & 1911">
+                        <option>Springfield Hellcat</option>
+                        <option>Springfield Echelon</option>
+                        <option>Staccato P</option>
+                        <option>Staccato C2</option>
+                    </optgroup>
+                    <optgroup label="Canik">
+                        <option>Canik TP9SFx</option>
+                        <option>Canik Mete SFT</option>
+                    </optgroup>
+                    <option>Other / Not Listed</option>
+                </select>
             </div>
             <div class="form-grid">
                 <div class="form-group"><label>Caliber</label>
