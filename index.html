@@ -150,7 +150,7 @@
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .form-group { display: flex; flex-direction: column; margin-bottom: 10px;}
         .form-group label { font-size: 10px; color: #aaa; margin-bottom: 4px; }
-        .form-group input, .form-group select { background: #1a1a1a; border: 1px solid #333; color: white; padding: 8px; border-radius: 6px; font-size: 12px; width: 100%; box-sizing: border-box; }
+        .form-group input, .form-group select { background: #1a1a1a; border: 1px solid #333; color: white; padding: 8px; border-radius: 6px; font-size: 12px; width: 100%; box-sizing: border-box; outline: none; }
         
         optgroup { color: #aaa; font-style: normal; font-weight: bold; background: #222; }
         
@@ -238,7 +238,9 @@
         <button id="btnCam" onclick="startCamera()">📸 Start Cam</button>
         <button id="btnBase" onclick="setBaseline()" disabled>🎯 Lock Target</button>
         <button id="btnRecord" class="btn-green" onclick="toggleRecording()" disabled>🔴 Record</button>
-        <button class="btn-gray" onclick="openProfileModal()" style="margin-top: 15px;">⚙️ Profile Set</button>
+        
+        <button class="btn-gray" onclick="openProfileModal()" style="margin-top: 15px;">👤 Profile Set</button>
+        <button class="btn-gray" onclick="openSettingsModal()" style="margin-bottom: 5px;">⚙️ Settings</button>
     </div>
 
     <div class="ad-sidebar" id="adSidebar">
@@ -259,6 +261,60 @@
         <a href="https://holosun.com/" target="_blank" class="ad-banner" style="background: #fff; display: flex; align-items: center; justify-content: center; padding: 5px;">
             <img src="https://image.primaryarms.com/production/SSP%20Applications/NetSuite%20Inc.%20-%20SCA%20Mont%20Blanc/Development/img/HE507C-GR-X2-ACSS_00.jpg?resizeid=7&resizeh=1100&resizew=1100" alt="Holosun 507C ACSS" style="width: 100%; height: auto; object-fit: contain;">
         </a>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto; width: 90%; max-width: 480px;">
+            <h2 style="margin:0 0 10px 0; font-size: 16px; border-bottom: 1px solid #333; padding-bottom: 5px; color: #fff;">System Settings</h2>
+            
+            <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">🔦 Hardware & Illumination</h3>
+            <div class="form-group">
+                <label>Short Range Flashlight</label>
+                <select id="setShortLight">
+                    <option value="auto" selected>Auto-On at Startup</option>
+                    <option value="button">On Physical Button Press</option>
+                    <option value="off">Disabled</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Long Range Flashlight</label>
+                <select id="setLongLight">
+                    <option value="button" selected>On Physical Button Press</option>
+                    <option value="auto">Auto-On at Startup</option>
+                    <option value="off">Disabled</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Laser Dot</label>
+                <select id="setLaser">
+                    <option value="button" selected>On Physical Button Press</option>
+                    <option value="auto">Auto-On at Startup</option>
+                    <option value="off">Disabled</option>
+                </select>
+            </div>
+
+            <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">📹 Media & Streaming</h3>
+            <div class="form-group">
+                <label>Video Recorder</label>
+                <select id="setVideo">
+                    <option value="timestamp" selected>Record with Time Stamp</option>
+                    <option value="notime">Record (No Time Stamp)</option>
+                    <option value="off">Disabled</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Live Stream</label>
+                <select id="setStream">
+                    <option value="off" selected>Off</option>
+                    <option value="on">Auto-Start</option>
+                </select>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top: 20px;">
+                <button class="btn-green" onclick="saveSettings()" style="margin:0; flex: 2;">💾 Save Settings</button>
+                <button class="btn-gray" onclick="closeSettingsModal()" style="margin:0; flex: 1;">Cancel</button>
+            </div>
+        </div>
     </div>
 
     <div id="profileModal" class="modal">
@@ -451,8 +507,15 @@
     <canvas id="calcCanvas" width="640" height="480" style="display:none;"></canvas>
 
 <script>
-    // --- GLOBAL PROFILE STATE ---
+    // --- GLOBAL STATE ---
     let userProfile = {};
+    let appSettings = {
+        shortLight: 'auto',
+        longLight: 'button',
+        laser: 'button',
+        video: 'timestamp',
+        stream: 'off'
+    };
 
     // --- UI/UX INTERACTIONS ---
     function toggleSidebar() {
@@ -492,9 +555,14 @@
         document.getElementById('profileModal').style.display = 'flex'; 
         closeAllSidebars(); 
     }
-    
     function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
     
+    function openSettingsModal() { 
+        document.getElementById('settingsModal').style.display = 'flex'; 
+        closeAllSidebars(); 
+    }
+    function closeSettingsModal() { document.getElementById('settingsModal').style.display = 'none'; }
+
     // SAVE PROFILE LOGIC
     function saveProfile() { 
         userProfile = {
@@ -517,6 +585,19 @@
         };
         console.log("Shooter Profile Saved:", userProfile);
         closeProfileModal(); 
+    }
+
+    // SAVE SETTINGS LOGIC
+    function saveSettings() {
+        appSettings = {
+            shortLight: document.getElementById('setShortLight').value,
+            longLight: document.getElementById('setLongLight').value,
+            laser: document.getElementById('setLaser').value,
+            video: document.getElementById('setVideo').value,
+            stream: document.getElementById('setStream').value
+        };
+        console.log("App Settings Saved:", appSettings);
+        closeSettingsModal();
     }
 
     function openMistakeModal(name, score) {
