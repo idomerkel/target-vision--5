@@ -230,57 +230,139 @@
             <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">⚙️ Firearm Setup</h3>
             <div class="form-group">
                 <label>Firearm Make/Model (Type to Search)</label>
-                <input list="firearmList" id="firearmInput" placeholder="e.g., Glock 19">
+                <input list="firearmList" id="firearmInput" placeholder="e.g., Glock 19" autocomplete="off">
                 <datalist id="firearmList">
-                    <option value="Glock 17"><option value="Glock 19"><option value="Glock 19X"><option value="Glock 43X"><option value="Glock 45"><option value="Glock 47">
-                    <option value="Sig P320"><option value="Sig P365"><option value="Sig P365 XMACRO"><option value="Sig P226">
-                    <option value="S&W M&P 9 M2.0"><option value="S&W Shield Plus"><option value="CZ P-10 C"><option value="CZ Shadow 2">
-                    <option value="Walther PDP"><option value="HK VP9"><option value="Springfield Echelon"><option value="Staccato P">
+                    <option value="Glock 17"></option>
+                    <option value="Glock 19"></option>
+                    <option value="Glock 19X"></option>
+                    <option value="Glock 26"></option>
+                    <option value="Glock 34"></option>
+                    <option value="Glock 43X"></option>
+                    <option value="Glock 45"></option>
+                    <option value="Glock 47"></option>
+                    <option value="Sig P320"></option>
+                    <option value="Sig P365"></option>
+                    <option value="Sig P365XL"></option>
+                    <option value="Sig P365 XMACRO"></option>
+                    <option value="Sig P226"></option>
+                    <option value="Sig P229"></option>
+                    <option value="S&W M&P 9 M2.0"></option>
+                    <option value="S&W Shield Plus"></option>
+                    <option value="S&W SD9 VE"></option>
+                    <option value="CZ 75 B"></option>
+                    <option value="CZ P-10 C"></option>
+                    <option value="CZ Shadow 2"></option>
+                    <option value="CZ P-07"></option>
+                    <option value="Beretta 92FS"></option>
+                    <option value="Beretta M9A4"></option>
+                    <option value="Beretta APX A1"></option>
+                    <option value="HK VP9"></option>
+                    <option value="HK P30"></option>
+                    <option value="Walther PDP"></option>
+                    <option value="Walther PPQ"></option>
+                    <option value="Springfield Hellcat"></option>
+                    <option value="Springfield Echelon"></option>
+                    <option value="Staccato P"></option>
+                    <option value="Staccato C2"></option>
+                    <option value="Canik TP9SFx"></option>
+                    <option value="Canik Mete SFT"></option>
                 </datalist>
             </div>
             <div class="form-grid">
                 <div class="form-group"><label>Caliber</label>
-                    <select id="propCaliber"><option>9mm</option><option>.380 ACP</option><option>.45 ACP</option><option>.40 S&W</option><option>10mm</option><option>.22 LR</option><option>Other</option></select>
+                    <select id="propCaliber">
+                        <option>9mm</option>
+                        <option>.380 ACP</option>
+                        <option>.45 ACP</option>
+                        <option>.40 S&W</option>
+                        <option>10mm</option>
+                        <option>.22 LR</option>
+                        <option>Other</option>
+                    </select>
                 </div>
                 <div class="form-group"><label>Optic / Sights</label>
-                    <select id="propSights"><option>Iron Sights</option><option>Red Dot (MRDS)</option><option>Laser</option></select>
+                    <select id="propSights">
+                        <option>Iron Sights</option>
+                        <option>Red Dot (MRDS)</option>
+                        <option>Laser</option>
+                    </select>
                 </div>
             </div>
 
             <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">🎯 Training Profile</h3>
             <div class="form-grid">
                 <div class="form-group"><label>Primary Purpose</label>
-                    <select id="propPurpose"><option>Self-Defense / CCW</option><option>Duty (LEO/Mil)</option><option>Competition</option><option>Recreational / Plinking</option></select>
+                    <select id="propPurpose">
+                        <option>Self-Defense / CCW</option>
+                        <option>Duty (LEO/Mil)</option>
+                        <option>Competition</option>
+                        <option>Recreational / Plinking</option>
+                    </select>
                 </div>
                 <div class="form-group"><label>Experience Level</label>
-                    <select id="propExp"><option>Novice</option><option>Intermediate</option><option>Advanced</option><option>Expert</option></select>
+                    <select id="propExp">
+                        <option>Novice</option>
+                        <option>Intermediate</option>
+                        <option>Advanced</option>
+                        <option>Expert</option>
+                    </select>
                 </div>
                 <div class="form-group"><label>Live-Fire Frequency</label>
-                    <select id="propFreq"><option>Weekly</option><option>Monthly</option><option>Few times a year</option><option>Rarely</option></select>
+                    <select id="propFreq">
+                        <option>Weekly</option>
+                        <option>Monthly</option>
+                        <option>Few times a year</option>
+                        <option>Rarely</option>
+                    </select>
                 </div>
                 <div class="form-group"><label>Dry-Fire Frequency</label>
-                    <select id="propDryFreq"><option>Daily</option><option>Weekly</option><option>Monthly</option><option>Rarely</option></select>
+                    <select id="propDryFreq">
+                        <option>Daily</option>
+                        <option>Weekly</option>
+                        <option>Monthly</option>
+                        <option>Rarely</option>
+                    </select>
                 </div>
             </div>
 
             <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">🦾 Biomechanics & Form</h3>
             <div class="form-grid">
                 <div class="form-group"><label>Hand Dominance</label>
-                    <select id="propHand"><option>Right</option><option>Left</option></select>
+                    <select id="propHand">
+                        <option>Right</option>
+                        <option>Left</option>
+                    </select>
                 </div>
                 <div class="form-group"><label>Eye Dominance</label>
-                    <select id="propEye"><option>Right</option><option>Left</option><option>Cross-Dominant</option></select>
+                    <select id="propEye">
+                        <option>Right</option>
+                        <option>Left</option>
+                        <option>Cross-Dominant</option>
+                    </select>
                 </div>
                 <div class="form-group"><label>Primary Stance</label>
-                    <select id="propStance"><option>Isosceles</option><option>Weaver</option><option>Chapman / Modified</option></select>
+                    <select id="propStance">
+                        <option>Isosceles</option>
+                        <option>Weaver</option>
+                        <option>Chapman / Modified</option>
+                    </select>
                 </div>
                 <div class="form-group"><label>Grip Style</label>
-                    <select id="propGrip"><option>Thumbs Forward</option><option>Crossed Thumbs</option><option>Teacup</option></select>
+                    <select id="propGrip">
+                        <option>Thumbs Forward</option>
+                        <option>Crossed Thumbs</option>
+                        <option>Teacup</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
                 <label>Physical Limitations</label>
-                <select id="propLimits"><option>None</option><option>Astigmatism (Visual)</option><option>Arthritis / Weak Grip</option><option>Prior Hand/Wrist Injury</option></select>
+                <select id="propLimits">
+                    <option>None</option>
+                    <option>Astigmatism (Visual)</option>
+                    <option>Arthritis / Weak Grip</option>
+                    <option>Prior Hand/Wrist Injury</option>
+                </select>
             </div>
 
             <h3 style="font-size: 11px; color: #00aaff; margin: 15px 0 8px 0; text-transform: uppercase; letter-spacing: 1px;">👤 Physical Metrics</h3>
@@ -337,7 +419,7 @@
     function openProfileModal() { document.getElementById('profileModal').style.display = 'flex'; toggleSidebar(); }
     function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
     
-    // NEW: Save Profile Logic
+    // SAVE PROFILE LOGIC
     function saveProfile() { 
         userProfile = {
             firearm: document.getElementById('firearmInput').value,
@@ -391,7 +473,7 @@
 
     const PROXIMITY = 15.0, REQ_FRAMES = 4;
     
-    // Relaxed thresholds
+    // RELAXED THRESHOLDS for mobile
     const GYRO_SHOT_THRESHOLD = 80;
     const ACCEL_SHOT_THRESHOLD = 15;  
     const GYRO_MOVE_THRESH = 20.0;    
@@ -814,7 +896,6 @@
         candidates = candidates.filter(c => c.f > 0);
     }
 
-    // Note: To utilize Hand Dominance logic later, you can access userProfile.handDominance inside this function.
     function getDiag131(x, y) {
         let dx = x - targetCenter.x, dy = targetCenter.y - y;
         let dist = Math.hypot(dx, dy);
